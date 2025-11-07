@@ -1,8 +1,6 @@
 'use client'
 
-// React Imports
 import { useEffect, useMemo, useState } from 'react'
-
 import { useRouter } from 'next/navigation'
 
 // MUI Imports
@@ -25,111 +23,119 @@ import {
   getSortedRowModel
 } from '@tanstack/react-table'
 
-import Link from '@/components/Link'
-
 // Components
-import CustomInputsDebounced from '@/@core/components/custom-inputs/Debounced'
-
-// Styles
-
+import Link from '@/components/Link'
 import ActionMenu from '@/@core/components/option-menu/ActionMenu'
 import TableGeneric from '@/@core/components/table/Generic'
+import CustomInputsDebounced from '@/@core/components/custom-inputs/Debounced'
 
 // Fuzzy filter untuk search
 const fuzzyFilter = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value)
-
   addMeta({ itemRank })
-
   return itemRank.passed
 }
 
-// Dummy banner data
-const defaultBannerData = [
+// Dummy data produk
+const defaultProductData = [
   {
     id: 1,
-    title: 'Promo Keramik 50%',
-    subtitle: 'Diskon besar untuk semua produk',
-    image: '/images/banner1.jpg',
-    link_url: '/promo',
-    order_no: 1,
+    name: 'Keramik Lantai Motif Kayu',
+    lang: 'id',
+    model: 'KMK-001',
+    size: '60x60',
+    description: 'Keramik lantai dengan motif kayu alami.',
+    type: 'lantai',
+    image: '/images/products/keramik1.jpg',
+    gallery: ['/images/products/keramik1a.jpg', '/images/products/keramik1b.jpg'],
+    brochure_id: 2,
+    meta_title: 'Keramik Lantai Motif Kayu - Global',
+    meta_description: 'Keramik lantai kayu terbaik untuk rumah Anda.',
+    meta_keywords: 'keramik lantai, motif kayu, global',
+    slug: 'keramik-lantai-motif-kayu',
     is_active: true,
     created_at: '2025-01-01 10:00',
     updated_at: '2025-01-02 12:00'
   },
   {
     id: 2,
-    title: 'Produk Baru',
-    subtitle: 'Lihat koleksi terbaru kami',
-    image: '/images/banner2.jpg',
-    link_url: '/produk-baru',
-    order_no: 2,
+    name: 'Keramik Dinding Putih Glossy',
+    lang: 'id',
+    model: 'KDP-002',
+    size: '30x60',
+    description: 'Keramik dinding dengan permukaan mengkilap.',
+    type: 'dinding',
+    image: '/images/products/keramik2.jpg',
+    gallery: ['/images/products/keramik2a.jpg'],
+    brochure_id: 1,
+    meta_title: 'Keramik Dinding Putih - Global',
+    meta_description: 'Keramik dinding putih glossy untuk tampilan bersih.',
+    meta_keywords: 'keramik dinding, putih, glossy',
+    slug: 'keramik-dinding-putih-glossy',
     is_active: false,
     created_at: '2025-01-05 09:00',
     updated_at: '2025-01-06 11:00'
   }
 ]
 
-// Column helper
 const columnHelper = createColumnHelper()
 
-const BannerPage = () => {
-  const [data, setData] = useState(defaultBannerData)
+const ProductPage = () => {
+  const [data, setData] = useState(defaultProductData)
   const [filteredData, setFilteredData] = useState(data)
   const [globalFilter, setGlobalFilter] = useState('')
-
   const router = useRouter()
 
-  const actionsData = row => {
-    return [
-      {
-        text: 'View',
-        icon: <i className='ri-eye-line text-blue-500' />, // biru
-        menuItemProps: {
-          className: 'gap-2',
-          onClick: () => router.push(`/esse-panel/banners/${row.original.id}`)
-        }
-      },
-      {
-        text: 'Edit',
-        icon: <i className='ri-edit-box-line text-yellow-500' />, // kuning/oranye
-        menuItemProps: {
-          className: 'gap-2',
-          onClick: () => router.push(`/esse-panel/banners/${row.original.id}/edit`)
-        }
-      },
-      {
-        text: 'Delete',
-        icon: <i className='ri-delete-bin-line text-red-500' />, // merah
-        menuItemProps: {
-          className: 'gap-2',
-          onClick: () => deleteBanner(row.original.id)
-        }
+  const actionsData = row => [
+    {
+      text: 'View',
+      icon: <i className='ri-eye-line text-blue-500' />,
+      menuItemProps: {
+        className: 'gap-2',
+        onClick: () => router.push(`/esse-panel/products/${row.original.id}`)
       }
-    ]
-  }
+    },
+    {
+      text: 'Edit',
+      icon: <i className='ri-edit-box-line text-yellow-500' />,
+      menuItemProps: {
+        className: 'gap-2',
+        onClick: () => router.push(`/esse-panel/products/${row.original.id}/edit`)
+      }
+    },
+    {
+      text: 'Delete',
+      icon: <i className='ri-delete-bin-line text-red-500' />,
+      menuItemProps: {
+        className: 'gap-2',
+        onClick: () => deleteProduct(row.original.id)
+      }
+    }
+  ]
 
   const columns = useMemo(
     () => [
-      columnHelper.accessor('title', {
-        header: 'Title',
-        cell: info => <Typography>{info.getValue()}</Typography>
-      }),
-      columnHelper.accessor('subtitle', {
-        header: 'Subtitle',
-        cell: info => <Typography>{info.getValue()}</Typography>
-      }),
       columnHelper.accessor('image', {
         header: 'Image',
-        cell: info => <img src={info.getValue()} alt='Banner' className='w-24 h-12 object-cover rounded' />
+        cell: info => <img src={info.getValue()} alt='Product' className='w-24 h-12 object-cover rounded' />
       }),
-      columnHelper.accessor('link_url', {
-        header: 'Link URL',
-        cell: info => <Typography className='text-blue-600'>{info.getValue()}</Typography>
-      }),
-      columnHelper.accessor('order_no', {
-        header: 'Order',
+      columnHelper.accessor('name', {
+        header: 'Product Name',
         cell: info => <Typography>{info.getValue()}</Typography>
+      }),
+      columnHelper.accessor('model', {
+        header: 'Model',
+        cell: info => <Typography>{info.getValue()}</Typography>
+      }),
+      columnHelper.accessor('size', {
+        header: 'Size',
+        cell: info => <Typography>{info.getValue()}</Typography>
+      }),
+      columnHelper.accessor('type', {
+        header: 'Type',
+        cell: info => (
+          <Typography className='capitalize'>{info.getValue() === 'lantai' ? 'Lantai' : 'Dinding'}</Typography>
+        )
       }),
       columnHelper.accessor('is_active', {
         header: 'Active',
@@ -147,6 +153,16 @@ const BannerPage = () => {
     []
   )
 
+  const toggleActive = id => {
+    setData(prev => prev.map(item => (item.id === id ? { ...item, is_active: !item.is_active } : item)))
+    setFilteredData(prev => prev.map(item => (item.id === id ? { ...item, is_active: !item.is_active } : item)))
+  }
+
+  const deleteProduct = id => {
+    setData(prev => prev.filter(item => item.id !== id))
+    setFilteredData(prev => prev.filter(item => item.id !== id))
+  }
+
   const table = useReactTable({
     data: filteredData,
     columns,
@@ -159,32 +175,24 @@ const BannerPage = () => {
     getPaginationRowModel: getPaginationRowModel()
   })
 
-  const toggleActive = id => {
-    setData(prev => prev.map(item => (item.id === id ? { ...item, is_active: !item.is_active } : item)))
-    setFilteredData(prev => prev.map(item => (item.id === id ? { ...item, is_active: !item.is_active } : item)))
-  }
-
-  const deleteBanner = id => {
-    setData(prev => prev.filter(item => item.id !== id))
-    setFilteredData(prev => prev.filter(item => item.id !== id))
-  }
-
   return (
     <Card>
-      <CardHeader title='Banner Management' className='p-4' />
+      <CardHeader title='Product Management' className='p-4' />
       <Divider />
+
       <div className='flex justify-between flex-col sm:flex-row p-4 gap-4'>
         <CustomInputsDebounced
           value={globalFilter ?? ''}
           onChange={value => setGlobalFilter(String(value))}
-          placeholder='Search Banner'
+          placeholder='Search Product'
         />
-        <Link href='/esse-panel/banners/add'>
+        <Link href='/esse-panel/products/add'>
           <Button variant='contained' color='primary' startIcon={<i className='ri-add-line' />}>
-            Add Banner
+            Add Product
           </Button>
         </Link>
       </div>
+
       <TableGeneric table={table} />
 
       <TablePagination
@@ -200,4 +208,4 @@ const BannerPage = () => {
   )
 }
 
-export default BannerPage
+export default ProductPage

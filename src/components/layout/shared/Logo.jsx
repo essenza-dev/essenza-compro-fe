@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 
 import styled from '@emotion/styled'
 
-import MaterioLogo from '@core/svg/Logo'
+import EssenzaLogo from '@core/svg/Logo'
 
 import themeConfig from '@configs/themeConfig'
 
@@ -49,7 +49,7 @@ const Logo = ({ color }) => {
 
   return (
     <div className='flex items-center min-bs-[24px]'>
-      <MaterioLogo className='text-[22px] text-primary' />
+      <EssenzaLogo className='text-[22px] text-primary' />
       <LogoText
         color={color}
         ref={logoTextRef}

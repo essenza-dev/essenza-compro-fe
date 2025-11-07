@@ -155,9 +155,10 @@ const BannersForm = ({ initialData = defaultBanner, onSubmit, onCancel }) => {
 
         <Divider />
 
-        <Box className='flex justify-end gap-3 p-4'>
+        <Box className='flex justify-between gap-3 p-4'>
           <Button
             variant='outlined'
+            className='w-1/4'
             color='secondary'
             startIcon={<i className='ri-close-line text-lg' />}
             onClick={onCancel}
@@ -167,6 +168,7 @@ const BannersForm = ({ initialData = defaultBanner, onSubmit, onCancel }) => {
           <Button
             type='submit'
             variant='contained'
+            className='w-1/4'
             color='success'
             startIcon={<i className='ri-save-3-line text-lg' />}
           >

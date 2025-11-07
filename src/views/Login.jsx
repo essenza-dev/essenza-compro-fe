@@ -70,7 +70,7 @@ const Login = ({ mode }) => {
   } = useForm({
     resolver: valibotResolver(schema),
     defaultValues: {
-      email: 'admin@materio.com',
+      email: 'admin@Essenza.com',
       password: 'admin'
     }
   })
@@ -141,7 +141,7 @@ const Login = ({ mode }) => {
           </div>
           <Alert icon={false} className='bg-primaryLight'>
             <Typography variant='body2' color='primary'>
-              Email: <span className='font-medium'>admin@materio.com</span> / Pass:{' '}
+              Email: <span className='font-medium'>admin@Essenza.com</span> / Pass:{' '}
               <span className='font-medium'>admin</span>
             </Typography>
           </Alert>

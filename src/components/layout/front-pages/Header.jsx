@@ -68,7 +68,7 @@ const Header = ({ mode }) => {
               <CustomIconButton
                 component={Link}
                 variant='contained'
-                href='https://themeselection.com/item/materio-mui-nextjs-admin-template/'
+                href='https://themeselection.com/item/Essenza-mui-nextjs-admin-template/'
                 color='primary'
                 target='_blank'
               >
@@ -78,7 +78,7 @@ const Header = ({ mode }) => {
               <Button
                 component={Link}
                 variant='contained'
-                href='https://themeselection.com/item/materio-mui-nextjs-admin-template/'
+                href='https://themeselection.com/item/Essenza-mui-nextjs-admin-template/'
                 startIcon={<i className='ri-shopping-cart-line text-xl' />}
                 className='whitespace-nowrap'
                 target='_blank'
