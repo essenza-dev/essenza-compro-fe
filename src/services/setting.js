@@ -1,7 +1,7 @@
 import apiClient from '@/utils/apiClient'
 
-const updateGeneralSetting = async (id, data) => {
-  return await apiClient.put(`/projects/${id}`, data, {
+const updateGeneralSetting = async data => {
+  return await apiClient.put(`/projects/`, data, {
     headers: { 'Content-Type': 'multipart/form-data' }
   })
 }

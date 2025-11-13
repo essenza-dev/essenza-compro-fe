@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 
 // MUI Components
 import Card from '@mui/material/Card'
@@ -16,8 +16,10 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 
+import CustomTextField from '@/@core/components/custom-inputs/TextField'
+
 // Default blank banner
-const defaultBanner = {
+const defaultData = {
   title: '',
   subtitle: '',
   image: '',
@@ -26,18 +28,28 @@ const defaultBanner = {
   is_active: true
 }
 
-const BannersForm = ({ initialData = defaultBanner, onSubmit, onCancel }) => {
-  const [form, setForm] = useState(initialData)
-  const [preview, setPreview] = useState(initialData.image || '')
+const BannersForm = ({ isEdit, onSubmit, onCancel }) => {
+  const [data, setData] = useState(defaultData)
+  const [preview, setPreview] = useState(defaultData.image || '')
+
+  const fields = useMemo(
+    () => [
+      { name: 'title', label: 'Title', placeholder: 'Banner Title', size: 6, required: true },
+      { name: 'subtitle', label: 'Subtitle', placeholder: 'Sub Title Banner', size: 6 },
+      { name: 'link_url', label: 'Link URL', placeholder: 'https://example.com', size: 6, required: true },
+      { name: 'order_no', label: 'Order No', type: 'number', size: 4 }
+    ],
+    []
+  )
 
   const handleChange = e => {
     const { name, value } = e.target
 
-    setForm(prev => ({ ...prev, [name]: value }))
+    setData(prev => ({ ...prev, [name]: value }))
   }
 
   const handleSwitchChange = e => {
-    setForm(prev => ({ ...prev, is_active: e.target.checked }))
+    setData(prev => ({ ...prev, is_active: e.target.checked }))
   }
 
   const handleImageChange = e => {
@@ -47,78 +59,35 @@ const BannersForm = ({ initialData = defaultBanner, onSubmit, onCancel }) => {
       const imageUrl = URL.createObjectURL(file)
 
       setPreview(imageUrl)
-      setForm(prev => ({ ...prev, image: file }))
+      setData(prev => ({ ...prev, image: file }))
     }
-  }
-
-  const handleSubmit = e => {
-    e.preventDefault()
-    if (onSubmit) onSubmit(form)
   }
 
   return (
     <Card className='shadow'>
       <CardHeader
-        title={initialData.id ? 'Edit Banner' : 'Add New Banner'}
+        title={defaultData.id ? 'Edit Banner' : 'Add New Banner'}
         subheader='Isi semua informasi banner di bawah ini.'
       />
       <Divider />
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         <CardContent>
-          <Grid container spacing={4}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                size='small'
-                label='Title'
-                name='title'
-                value={form.title}
+          <Grid container spacing={5} className='mbe-5'>
+            {fields.map(field => (
+              <CustomTextField
+                key={field.name}
+                {...field}
+                type={field.type || 'text'}
+                value={data[field.name] || ''}
                 onChange={handleChange}
-                placeholder='Judul banner'
+                inputProps={field.type === 'number' ? { min: 1 } : {}}
               />
-            </Grid>
+            ))}
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                size='small'
-                label='Subtitle'
-                name='subtitle'
-                value={form.subtitle}
-                onChange={handleChange}
-                placeholder='Subjudul banner'
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                size='small'
-                label='Link URL'
-                name='link_url'
-                value={form.link_url}
-                onChange={handleChange}
-                placeholder='https://example.com'
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={3}>
-              <TextField
-                fullWidth
-                size='small'
-                type='number'
-                label='Order No'
-                name='order_no'
-                value={form.order_no}
-                onChange={handleChange}
-                inputProps={{ min: 1 }}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={2}>
               <FormControlLabel
-                control={<Switch checked={form.is_active} onChange={handleSwitchChange} />}
+                control={<Switch checked={data.is_active} onChange={handleSwitchChange} />}
                 label='Active'
               />
             </Grid>
@@ -137,14 +106,19 @@ const BannersForm = ({ initialData = defaultBanner, onSubmit, onCancel }) => {
                     className='absolute top-1 right-1 bg-white shadow'
                     onClick={() => {
                       setPreview('')
-                      setForm(prev => ({ ...prev, image: '' }))
+                      setData(prev => ({ ...prev, image: '' }))
                     }}
                   >
                     <i className='ri-delete-bin-line text-red-500 text-lg' />
                   </IconButton>
                 </Box>
               ) : (
-                <Button variant='outlined' component='label' startIcon={<i className='ri-upload-2-line text-lg' />}>
+                <Button
+                  variant='outlined'
+                  component='label'
+                  startIcon={<i className='ri-upload-2-line text-lg' />}
+                  color='primary'
+                >
                   Upload Image
                   <input type='file' hidden accept='image/*' onChange={handleImageChange} />
                 </Button>
@@ -157,9 +131,9 @@ const BannersForm = ({ initialData = defaultBanner, onSubmit, onCancel }) => {
 
         <Box className='flex justify-between gap-3 p-4'>
           <Button
-            variant='outlined'
+            variant='contained'
             className='w-1/4'
-            color='secondary'
+            color='warning'
             startIcon={<i className='ri-close-line text-lg' />}
             onClick={onCancel}
           >
@@ -172,7 +146,7 @@ const BannersForm = ({ initialData = defaultBanner, onSubmit, onCancel }) => {
             color='success'
             startIcon={<i className='ri-save-3-line text-lg' />}
           >
-            {initialData.id ? 'Update' : 'Save'}
+            {defaultData.id ? 'Update' : 'Save'}
           </Button>
         </Box>
       </form>

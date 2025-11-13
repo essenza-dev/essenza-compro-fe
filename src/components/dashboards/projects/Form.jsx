@@ -1,14 +1,23 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { TextField, Button, Card, CardContent, FormControlLabel, Switch } from '@mui/material'
-import { createProject, getProjectById, updateProject } from '@/services/projects'
+
 import { useRouter, useParams } from 'next/navigation'
+
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Switch from '@mui/material/Switch'
+
+import { createProject, getProjectById, updateProject } from '@/services/projects'
 
 const ProjectForm = ({ isEdit = false }) => {
   const router = useRouter()
   const { id } = useParams()
   const [loading, setLoading] = useState(false)
+
   const [formData, setFormData] = useState({
     title: '',
     location: '',
@@ -30,12 +39,14 @@ const ProjectForm = ({ isEdit = false }) => {
 
   const handleChange = e => {
     const { name, value } = e.target
+
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
   const handleSubmit = async e => {
     e.preventDefault()
     setLoading(true)
+
     try {
       if (isEdit) await updateProject(id, formData)
       else await createProject(formData)

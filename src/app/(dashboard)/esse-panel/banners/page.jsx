@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 
@@ -180,7 +180,7 @@ const BannerPage = () => {
           placeholder='Search Banner'
         />
         <Link href='/esse-panel/banners/add'>
-          <Button variant='contained' color='primary' startIcon={<i className='ri-add-line' />}>
+          <Button variant='contained' color='success' startIcon={<i className='ri-add-line' />}>
             Add Banner
           </Button>
         </Link>

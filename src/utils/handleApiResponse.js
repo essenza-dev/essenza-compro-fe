@@ -1,18 +1,28 @@
-export const handleApiResponse = async (apiCall, { success, error }) => {
+export const handleApiResponse = async (apiCall, { success, error, onSuccess, onError } = {}) => {
   try {
     const res = await apiCall()
 
-    if (res?.status === 200 || res?.status === 201 || res?.success) {
-      success(res.message || 'Action completed successfully!')
+    const isSuccess = res?.status === 200 || res?.status === 201 || res?.success
+
+    if (isSuccess) {
+      if (success) success(res.message || 'Action completed successfully!')
+      if (onSuccess) onSuccess(res)
+
       return res.data || res
     } else {
-      error(res?.message || 'Unexpected API response')
-      throw new Error(res?.message || 'Unexpected API response')
+      const msg = res?.message || 'Unexpected API response'
+
+      if (error) error(msg)
+      if (onError) onError(res)
+      throw new Error(msg)
     }
   } catch (err) {
     console.error('❌ API Error:', err)
+
     const msg = err?.response?.data?.message || err?.message || 'Something went wrong. Please try again.'
-    error(msg)
+
+    if (error) error(msg)
+    if (onError) onError(err)
     throw err
   }
 }
