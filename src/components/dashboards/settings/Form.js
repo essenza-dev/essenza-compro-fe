@@ -12,6 +12,12 @@ import Grid from '@mui/material/Grid'
 
 import CustomTextField from '@/@core/components/custom-inputs/TextField'
 
+import useSnackbar from '@/@core/hooks/useSnackbar'
+
+import { updateGeneralSetting } from '@/services/setting'
+
+import { handleApiResponse } from '@/utils/handleApiResponse'
+
 const defaultData = {
   site_name: 'PT. Maju Jaya Keramik',
   site_description: 'Distributor ubin dan keramik terpercaya dengan berbagai pilihan motif, warna, dan ukuran.',
@@ -22,8 +28,11 @@ const defaultData = {
     'PT. Maju Jaya Keramik menyediakan ubin dan keramik berkualitas tinggi untuk hunian dan proyek Anda.'
 }
 
-const SettingsForm = ({ isEdit, onSubmit, onCancel, onEdit }) => {
+const SettingsForm = () => {
   const [data, setData] = useState(defaultData)
+  const [isEdit, setIsEdit] = useState(false)
+
+  const { success, error, SnackbarComponent } = useSnackbar()
 
   const fields = useMemo(
     () => [
@@ -56,6 +65,17 @@ const SettingsForm = ({ isEdit, onSubmit, onCancel, onEdit }) => {
     []
   )
 
+  const handleSubmit = async e => {
+    e.preventDefault()
+
+    await handleApiResponse(() => updateGeneralSetting(data), {
+      success: msg => success(msg),
+      error: msg => error(msg),
+      onSuccess: () => setIsEdit(false),
+      onError: () => {}
+    })
+  }
+
   const handleChange = e => {
     const { name, value } = e.target
 
@@ -63,59 +83,62 @@ const SettingsForm = ({ isEdit, onSubmit, onCancel, onEdit }) => {
   }
 
   return (
-    <Card>
-      <CardHeader title='General Settings' />
-      <Divider />
-      <CardContent>
-        <Grid container spacing={5} className='mbe-5'>
-          {fields.map(field => (
-            <CustomTextField
-              key={field.name}
-              {...field}
-              disabled={!isEdit}
-              value={data[field.name] || ''}
-              onChange={handleChange}
-            />
-          ))}
-        </Grid>
-        <Divider className='mb-5' />
-        <Box className='text-right flex justify-between flex-row-reverse gap-4'>
-          {!isEdit ? (
-            <Button
-              variant='contained'
-              color='info'
-              className='w-1/4'
-              onClick={onEdit}
-              startIcon={<i className='ri-pencil-line text-lg' />}
-            >
-              Edit
-            </Button>
-          ) : (
-            <>
+    <>
+      <Card>
+        <CardHeader title='General Settings' />
+        <Divider />
+        <CardContent>
+          <Grid container spacing={5} className='mbe-5'>
+            {fields.map(field => (
+              <CustomTextField
+                key={field.name}
+                {...field}
+                disabled={!isEdit}
+                value={data[field.name] || ''}
+                onChange={handleChange}
+              />
+            ))}
+          </Grid>
+          <Divider className='mb-5' />
+          <Box className='text-right flex justify-between flex-row-reverse gap-4'>
+            {!isEdit ? (
               <Button
                 variant='contained'
-                color='success'
+                color='info'
                 className='w-1/4'
-                onClick={onSubmit}
-                startIcon={<i className='ri-save-3-line text-lg' />}
+                onClick={() => setIsEdit(true)}
+                startIcon={<i className='ri-pencil-line text-lg' />}
               >
-                Save
+                Edit
               </Button>
+            ) : (
+              <>
+                <Button
+                  variant='contained'
+                  color='success'
+                  className='w-1/4'
+                  onClick={handleSubmit}
+                  startIcon={<i className='ri-save-3-line text-lg' />}
+                >
+                  Save
+                </Button>
 
-              <Button
-                variant='contained'
-                color='warning'
-                className='w-1/4'
-                onClick={onCancel}
-                startIcon={<i className='ri-close-line text-lg' />}
-              >
-                Cancel
-              </Button>
-            </>
-          )}
-        </Box>
-      </CardContent>
-    </Card>
+                <Button
+                  variant='contained'
+                  color='warning'
+                  className='w-1/4'
+                  onClick={() => setIsEdit(false)}
+                  startIcon={<i className='ri-close-line text-lg' />}
+                >
+                  Cancel
+                </Button>
+              </>
+            )}
+          </Box>
+        </CardContent>
+      </Card>
+      {SnackbarComponent}
+    </>
   )
 }
 

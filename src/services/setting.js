@@ -1,9 +1,7 @@
 import apiClient from '@/utils/apiClient'
 
 const updateGeneralSetting = async data => {
-  return await apiClient.put(`/projects/`, data, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  })
+  return await apiClient.put(`/projects/`, data)
 }
 
 const updateSocialMedia = async (id, data) => {
