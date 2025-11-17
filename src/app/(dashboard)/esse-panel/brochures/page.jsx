@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+
 import { useRouter } from 'next/navigation'
 
 // MUI Imports
@@ -27,11 +28,14 @@ import Link from '@/components/Link'
 import ActionMenu from '@/@core/components/option-menu/ActionMenu'
 import TableGeneric from '@/@core/components/table/Generic'
 import CustomInputsDebounced from '@/@core/components/custom-inputs/Debounced'
+import TableHeaderActions from '@/@core/components/table/HeaderActions'
 
 // Fuzzy filter untuk search
 const fuzzyFilter = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value)
+
   addMeta({ itemRank })
+
   return itemRank.passed
 }
 
@@ -143,22 +147,15 @@ const BrochurePage = () => {
     <Card>
       <CardHeader title='Brochure Management' className='p-4' />
       <Divider />
-
-      <div className='flex justify-between flex-col sm:flex-row p-4 gap-4'>
-        <CustomInputsDebounced
-          value={globalFilter ?? ''}
-          onChange={value => setGlobalFilter(String(value))}
-          placeholder='Search Brochure'
-        />
-        <Link href='/esse-panel/brochures/add'>
-          <Button variant='contained' color='primary' startIcon={<i className='ri-add-line' />}>
-            Add Brochure
-          </Button>
-        </Link>
-      </div>
-
+      <TableHeaderActions
+        searchPlaceholder='Search Brochure'
+        searchValue={globalFilter ?? ''}
+        onSearchChange={setGlobalFilter}
+        addLabel='Add Brochure'
+        addHref='/esse-panel/brochures/add'
+        addColor='success'
+      />
       <TableGeneric table={table} />
-
       <TablePagination
         component='div'
         count={table.getFilteredRowModel().rows.length}

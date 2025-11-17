@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation'
 // MUI Imports
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
-import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import Switch from '@mui/material/Switch'
 import TablePagination from '@mui/material/TablePagination'
@@ -25,17 +24,10 @@ import {
   getSortedRowModel
 } from '@tanstack/react-table'
 
-import Link from '@/components/Link'
-
-// Components
-import CustomInputsDebounced from '@/@core/components/custom-inputs/Debounced'
-
-// Styles
-
 import ActionMenu from '@/@core/components/option-menu/ActionMenu'
 import TableGeneric from '@/@core/components/table/Generic'
+import TableHeaderActions from '@/@core/components/table/HeaderActions'
 
-// Fuzzy filter untuk search
 const fuzzyFilter = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value)
 
@@ -173,20 +165,15 @@ const BannerPage = () => {
     <Card>
       <CardHeader title='Banner Management' className='p-4' />
       <Divider />
-      <div className='flex justify-between flex-col sm:flex-row p-4 gap-4'>
-        <CustomInputsDebounced
-          value={globalFilter ?? ''}
-          onChange={value => setGlobalFilter(String(value))}
-          placeholder='Search Banner'
-        />
-        <Link href='/esse-panel/banners/add'>
-          <Button variant='contained' color='success' startIcon={<i className='ri-add-line' />}>
-            Add Banner
-          </Button>
-        </Link>
-      </div>
+      <TableHeaderActions
+        searchPlaceholder='Search Banner'
+        searchValue={globalFilter ?? ''}
+        onSearchChange={setGlobalFilter}
+        addLabel='Add Banner'
+        addHref='/esse-panel/banners/add'
+        addColor='success'
+      />
       <TableGeneric table={table} columns={columns} />
-
       <TablePagination
         component='div'
         count={table.getFilteredRowModel().rows.length}

@@ -1,11 +1,18 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+
 import { useParams, useRouter } from 'next/navigation'
-import { Card, CardContent, CardHeader, Divider, Grid, Typography, Button, Box } from '@mui/material'
+
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
 
 import { getDistributorById, deleteDistributor } from '@/services/distributors'
 import DetailField from '@/components/DetailField' // Komponen reusable yg sudah kamu punya
+import DetailActions from '@/components/DetailActions'
 
 const DistributorDetailPage = () => {
   const { id } = useParams()
@@ -50,36 +57,7 @@ const DistributorDetailPage = () => {
           </Grid>
         </CardContent>
         <Divider />
-        <Box className='flex justify-between items-center p-4 gap-3'>
-          <Button
-            variant='outlined'
-            color='secondary'
-            className='w-1/6'
-            startIcon={<i className='ri-arrow-left-line' />}
-            onClick={() => router.push('/esse-panel/distributors')}
-          >
-            Back
-          </Button>
-          <Box className='w-1/2' />
-          <Button
-            variant='contained'
-            color='error'
-            className='w-1/6'
-            startIcon={<i className='ri-delete-bin-line' />}
-            onClick={handleDelete}
-          >
-            Delete
-          </Button>
-          <Button
-            variant='contained'
-            color='warning'
-            className='w-1/6'
-            startIcon={<i className='ri-pencil-line' />}
-            onClick={() => router.push(`/esse-panel/distributors/${id}/edit`)}
-          >
-            Edit
-          </Button>
-        </Box>
+        <DetailActions id={id} href='ditributors' />
       </Card>
     </div>
   )

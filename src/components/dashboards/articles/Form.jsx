@@ -1,10 +1,9 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+
 import { useRouter } from 'next/navigation'
 
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
@@ -12,16 +11,14 @@ import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
-import CustomTextField from '@/@core/components/custom-inputs/TextField'
-
-import { getArticleById, createArticle, updateArticle } from '@/services/article'
-
-// TIPTAP
 import { useEditor, EditorContent } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
 import { Underline } from '@tiptap/extension-underline'
 import { Placeholder } from '@tiptap/extension-placeholder'
 import { TextAlign } from '@tiptap/extension-text-align'
+
+import { getArticleById, createArticle, updateArticle } from '@/services/article'
+import CustomTextField from '@/@core/components/custom-inputs/TextField'
 
 import EditorToolbar from '@/@core/components/editor/EditorToolbar'
 
@@ -119,11 +116,13 @@ const ArticleForm = ({ id }) => {
 
   const handleChange = e => {
     const { name, value } = e.target
+
     setData(prev => ({ ...prev, [name]: value }))
   }
 
   const handleSubmit = async e => {
     e.preventDefault()
+
     try {
       if (isEdit) {
         await updateArticle(id, data)
@@ -132,6 +131,7 @@ const ArticleForm = ({ id }) => {
         await createArticle(data)
         alert('Article added!')
       }
+
       router.push('/esse-panel/articles')
     } catch (err) {
       console.error('❌ Error:', err)

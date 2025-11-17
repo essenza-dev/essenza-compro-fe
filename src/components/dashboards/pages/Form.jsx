@@ -1,14 +1,18 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+
 import { useRouter, useParams } from 'next/navigation'
+
 import { TextField, Button, Card, CardContent, CardHeader, Divider, FormControlLabel, Switch } from '@mui/material'
+
 import { getPageById, updatePage, createPage } from '@/services/pages'
 
-const PageForm = ({ isEdit = false }) => {
+const PageForm = ({ id }) => {
   const router = useRouter()
-  const { id } = useParams()
+
   const [loading, setLoading] = useState(false)
+
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -20,15 +24,16 @@ const PageForm = ({ isEdit = false }) => {
   })
 
   useEffect(() => {
-    if (isEdit && id) {
+    if (id) {
       getPageById(id).then(data => {
         if (data) setFormData(data)
       })
     }
-  }, [id, isEdit])
+  }, [id])
 
   const handleChange = e => {
     const { name, value } = e.target
+
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
@@ -41,13 +46,14 @@ const PageForm = ({ isEdit = false }) => {
     setLoading(true)
 
     try {
-      if (isEdit) {
+      if (id) {
         await updatePage(id, formData)
         alert('Page updated successfully!')
       } else {
         await createPage({ ...formData, created_at: new Date().toISOString() })
         alert('Page added successfully!')
       }
+
       router.push('/esse-panel/pages')
     } catch (error) {
       console.error(error)
@@ -59,7 +65,7 @@ const PageForm = ({ isEdit = false }) => {
 
   return (
     <Card className='shadow'>
-      <CardHeader title={isEdit ? 'Edit Page' : 'Add Page'} />
+      <CardHeader title={id ? 'Edit Page' : 'Add Page'} />
       <Divider />
       <CardContent>
         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
@@ -131,7 +137,7 @@ const PageForm = ({ isEdit = false }) => {
               Cancel
             </Button>
             <Button type='submit' variant='contained' disabled={loading}>
-              {loading ? 'Saving...' : isEdit ? 'Update' : 'Save'}
+              {loading ? 'Saving...' : id ? 'Update' : 'Save'}
             </Button>
           </div>
         </form>

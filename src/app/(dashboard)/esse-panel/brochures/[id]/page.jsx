@@ -1,10 +1,21 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
-import { Card, CardContent, CardHeader, CardTitle, Button, Divider, Grid, Typography, Box } from '@mui/material'
 
-import { getBrochureById, deleteBrochure } from '@/services/brochure'
+import { useParams, useRouter } from 'next/navigation'
+
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+
+import { getBrochureById, deleteBrochure } from '@/services/brochures'
+import DetailField from '@/components/DetailField'
+import DetailActions from '@/components/DetailActions'
 
 const BrochureDetailPage = () => {
   const { id } = useParams()
@@ -16,6 +27,7 @@ const BrochureDetailPage = () => {
     const fetchBrochure = async () => {
       try {
         const data = await getBrochureById(id)
+
         setBrochure(data)
       } catch (err) {
         console.error('Failed to fetch brochure:', err)
@@ -45,30 +57,14 @@ const BrochureDetailPage = () => {
   return (
     <div className='p-6'>
       <Card className='w-full mx-auto shadow'>
-        <CardHeader>
-          <CardTitle>Brochure Detail</CardTitle>
-        </CardHeader>
+        <CardHeader title='Brochure Detail' />
         <Divider />
 
         <CardContent>
           <Grid container spacing={4}>
-            {/* Title */}
-            <Grid item xs={12} sm={6}>
-              <Typography variant='subtitle2'>Title</Typography>
-              <Typography variant='body1'>{brochure.title}</Typography>
-            </Grid>
-
-            {/* Created At */}
-            <Grid item xs={12} sm={6}>
-              <Typography variant='subtitle2'>Created At</Typography>
-              <Typography variant='body1'>{new Date(brochure.created_at).toLocaleString('id-ID')}</Typography>
-            </Grid>
-
-            {/* Description */}
-            <Grid item xs={12}>
-              <Typography variant='subtitle2'>Description</Typography>
-              <Typography variant='body1'>{brochure.description || '-'}</Typography>
-            </Grid>
+            <DetailField label='Title' value={brochure.title} />
+            <DetailField label='Created at' value={brochure.created_at} />
+            <DetailField label='Description' value={brochure.description} />
 
             {/* File URL */}
             <Grid item xs={12}>
@@ -98,42 +94,8 @@ const BrochureDetailPage = () => {
             </Grid>
           </Grid>
         </CardContent>
-
         <Divider />
-
-        {/* Action Buttons */}
-        <Box className='flex justify-between items-center p-4 gap-3'>
-          <Button
-            variant='outlined'
-            color='secondary'
-            className='w-1/4'
-            startIcon={<i className='ri-arrow-left-line text-lg' />}
-            onClick={() => router.push('/esse-panel/brochures')}
-          >
-            Back
-          </Button>
-
-          <Box className='flex gap-3 w-1/2 justify-end'>
-            <Button
-              variant='contained'
-              color='error'
-              className='w-1/2'
-              startIcon={<i className='ri-delete-bin-6-line text-lg' />}
-              onClick={handleDelete}
-            >
-              Delete
-            </Button>
-            <Button
-              variant='contained'
-              color='primary'
-              className='w-1/2'
-              startIcon={<i className='ri-pencil-line text-lg' />}
-              onClick={() => router.push(`/esse-panel/brochures/${id}/edit`)}
-            >
-              Edit
-            </Button>
-          </Box>
-        </Box>
+        <DetailActions id={id} href='brochures' />
       </Card>
     </div>
   )

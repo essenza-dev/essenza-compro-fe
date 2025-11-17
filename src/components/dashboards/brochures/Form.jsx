@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 
 import { useRouter } from 'next/navigation'
 
@@ -18,19 +18,20 @@ import { createBrochure, updateBrochure } from '@/services/brochures'
 
 import useSnackbar from '@/@core/hooks/useSnackbar'
 import CustomTextField from '@/@core/components/custom-inputs/TextField'
+import FormActions from '@/components/FormActions'
 
-const initialData = {
+const defaultData = {
   title: '',
   description: '',
   file: null,
   file_url: ''
 }
 
-const BrochuresForm = ({ isEdit = false }) => {
-  const [data, setData] = useState(initialData)
-  const [preview, setPreview] = useState(initialData.file_url || '')
-
+const BrochuresForm = ({ id }) => {
   const router = useRouter()
+  const isEdit = !!id
+  const [data, setData] = useState(defaultData)
+  const [preview, setPreview] = useState(defaultData.file_url || '')
 
   const { success, error, SnackbarComponent } = useSnackbar()
 
@@ -79,10 +80,7 @@ const BrochuresForm = ({ isEdit = false }) => {
   return (
     <>
       <Card className='shadow'>
-        <CardHeader
-          title={initialData.id ? 'Edit Brochure' : 'Add New Brochure'}
-          subheader='Isi semua informasi brosur di bawah ini.'
-        />
+        <CardHeader title={defaultData.id ? 'Edit Brochure' : 'Add Brochure'} />
         <Divider />
 
         <form onSubmit={handleSubmit}>
@@ -121,31 +119,8 @@ const BrochuresForm = ({ isEdit = false }) => {
               </Grid>
             </Grid>
           </CardContent>
-
           <Divider />
-
-          {/* Footer Buttons */}
-          <Box className='flex justify-between gap-3 p-4'>
-            <Button
-              variant='outlined'
-              className='w-1/4'
-              color='secondary'
-              startIcon={<i className='ri-close-line text-lg' />}
-              onClick={() => router.push('/esse-panel/brochures')}
-            >
-              Cancel
-            </Button>
-
-            <Button
-              type='submit'
-              variant='contained'
-              className='w-1/4'
-              color='success'
-              startIcon={<i className='ri-save-3-line text-lg' />}
-            >
-              {initialData.id ? 'Update' : 'Save'}
-            </Button>
-          </Box>
+          <FormActions onCancel={() => router.push('/esse-panel/brochures')} isEdit={isEdit} />
         </form>
       </Card>
       {SnackbarComponent}

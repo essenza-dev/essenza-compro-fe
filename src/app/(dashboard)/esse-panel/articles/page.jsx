@@ -1,7 +1,9 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+
 import { useRouter } from 'next/navigation'
+
 import Card from '@mui/material/Card'
 import Chip from '@mui/material/Chip'
 import CardHeader from '@mui/material/CardHeader'
@@ -17,6 +19,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel
 } from '@tanstack/react-table'
+
 import ActionMenu from '@/@core/components/option-menu/ActionMenu'
 import TableGeneric from '@/@core/components/table/Generic'
 import CustomAvatar from '@/@core/components/mui/Avatar'
@@ -26,7 +29,9 @@ import DialogBasic from '@/components/DialogBasic'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value)
+
   addMeta({ itemRank })
+
   return itemRank.passed
 }
 

@@ -1,10 +1,21 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+
 import { useParams, useRouter } from 'next/navigation'
-import { Card, CardHeader, CardTitle, CardContent, Button, Divider, Grid, Typography, Box } from '@mui/material'
+
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+
 import { getStoreById, deleteStore } from '@/services/stores'
 import DetailField from '@/components/DetailField'
+import DetailActions from '@/components/DetailActions'
 
 const StoreDetailPage = () => {
   const { id } = useParams()
@@ -34,9 +45,7 @@ const StoreDetailPage = () => {
   return (
     <div className='p-6'>
       <Card className='shadow'>
-        <CardHeader>
-          <CardTitle>Store Detail</CardTitle>
-        </CardHeader>
+        <CardHeader title='Store Detail' />
         <Divider />
         <CardContent>
           <Grid container spacing={4}>
@@ -48,7 +57,6 @@ const StoreDetailPage = () => {
             <DetailField label='Meta Title' value={store.meta_title} />
             <DetailField label='Meta Description' value={store.meta_description} xs={12} />
             <DetailField label='Meta Keywords' value={store.meta_keywords} xs={12} />
-
             <Grid item xs={12}>
               <Typography variant='subtitle2' className='mb-2'>
                 Main Image
@@ -61,7 +69,6 @@ const StoreDetailPage = () => {
                 </Typography>
               )}
             </Grid>
-
             {store.gallery?.length > 0 && (
               <Grid item xs={12}>
                 <Typography variant='subtitle2' className='mb-2'>
@@ -81,37 +88,8 @@ const StoreDetailPage = () => {
             )}
           </Grid>
         </CardContent>
-
         <Divider />
-
-        <Box className='flex justify-between items-center p-4 gap-3'>
-          <Button
-            variant='outlined'
-            startIcon={<i className='ri-arrow-left-line text-lg' />}
-            onClick={() => router.push('/esse-panel/stores')}
-          >
-            Back
-          </Button>
-
-          <Box className='flex gap-3'>
-            <Button
-              variant='contained'
-              color='error'
-              startIcon={<i className='ri-delete-bin-line text-lg' />}
-              onClick={handleDelete}
-            >
-              Delete
-            </Button>
-            <Button
-              variant='contained'
-              color='primary'
-              startIcon={<i className='ri-pencil-line text-lg' />}
-              onClick={() => router.push(`/esse-panel/stores/${id}/edit`)}
-            >
-              Edit
-            </Button>
-          </Box>
-        </Box>
+        <DetailActions id={id} href='stores' />
       </Card>
     </div>
   )

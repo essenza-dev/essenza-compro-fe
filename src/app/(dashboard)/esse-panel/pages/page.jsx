@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+
 import { useRouter } from 'next/navigation'
 
 import Card from '@mui/material/Card'
@@ -24,11 +25,14 @@ import Link from '@/components/Link'
 import ActionMenu from '@/@core/components/option-menu/ActionMenu'
 import TableGeneric from '@/@core/components/table/Generic'
 import CustomInputsDebounced from '@/@core/components/custom-inputs/Debounced'
+import TableHeaderActions from '@/@core/components/table/HeaderActions'
 
 // --- Fuzzy filter for search
 const fuzzyFilter = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value)
+
   addMeta({ itemRank })
+
   return itemRank.passed
 }
 
@@ -188,22 +192,15 @@ const PagesManagement = () => {
     <Card>
       <CardHeader title='Pages Management' className='p-4' />
       <Divider />
-
-      <div className='flex justify-between flex-col sm:flex-row p-4 gap-4'>
-        <CustomInputsDebounced
-          value={globalFilter ?? ''}
-          onChange={value => setGlobalFilter(String(value))}
-          placeholder='Search Page'
-        />
-        <Link href='/esse-panel/pages/add'>
-          <Button variant='contained' color='primary' startIcon={<i className='ri-add-line' />}>
-            Add Page
-          </Button>
-        </Link>
-      </div>
-
+      <TableHeaderActions
+        searchPlaceholder='Search Page'
+        searchValue={globalFilter ?? ''}
+        onSearchChange={setGlobalFilter}
+        addLabel='Add Page'
+        addHref='/esse-panel/pages/add'
+        addColor='success'
+      />
       <TableGeneric table={table} />
-
       <TablePagination
         component='div'
         count={table.getFilteredRowModel().rows.length}

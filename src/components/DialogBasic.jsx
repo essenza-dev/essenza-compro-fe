@@ -9,11 +9,22 @@ import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 
 const DialogBasic = props => {
-  const { open, onClose, onSubmit, title, description, children, actions } = props
+  const {
+    open,
+    onClose,
+    onSubmit,
+    title,
+    description,
+    children,
+    actions,
+    colorConfirm = 'success',
+    colorCancel = 'warning'
+  } = props
+
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth='sm'>
       {/* Header */}
-      <DialogTitle className='flex justify-between items-center'>
+      <DialogTitle className='flex justify-between items-center capitalize'>
         <span>{title}</span>
         <IconButton onClick={onClose} size='small'>
           <i className='ri-close-line text-textSecondary' />
@@ -40,7 +51,7 @@ const DialogBasic = props => {
           <Button
             variant='contained'
             className='w-1/3'
-            color='warning'
+            color={colorCancel}
             startIcon={<i className='ri-close-line text-lg' />}
             onClick={onClose}
           >
@@ -50,7 +61,7 @@ const DialogBasic = props => {
             onClick={onSubmit}
             variant='contained'
             className='w-1/3'
-            color='success'
+            color={colorConfirm}
             startIcon={<i className='ri-save-3-line text-lg' />}
           >
             Confirm

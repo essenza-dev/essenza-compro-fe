@@ -1,11 +1,18 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+
 import { useParams, useRouter } from 'next/navigation'
-import { Card, CardHeader, CardTitle, CardContent, Button, Divider, Grid, Typography, Box } from '@mui/material'
+
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
+import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
 
 import { getPageById, deletePage } from '@/services/pages'
 import DetailField from '@/components/DetailField'
+import DetailActions from '@/components/DetailActions'
 
 const PageDetail = () => {
   const { id } = useParams()
@@ -35,11 +42,8 @@ const PageDetail = () => {
   return (
     <div className='p-6'>
       <Card className='shadow'>
-        <CardHeader>
-          <CardTitle>Page Detail</CardTitle>
-        </CardHeader>
+        <CardHeader title='Page Detail'></CardHeader>
         <Divider />
-
         <CardContent>
           <Grid container spacing={4}>
             <DetailField label='Title' value={page.title} />
@@ -54,38 +58,8 @@ const PageDetail = () => {
             <DetailField label='Content' value={page.content} xs={12} />
           </Grid>
         </CardContent>
-
         <Divider />
-
-        <Box className='flex justify-between items-center p-4 gap-3'>
-          <Button
-            variant='outlined'
-            startIcon={<i className='ri-arrow-left-line text-lg' />}
-            onClick={() => router.push('/esse-panel/pages')}
-          >
-            Back
-          </Button>
-
-          <Box className='flex gap-3'>
-            <Button
-              variant='contained'
-              color='error'
-              startIcon={<i className='ri-delete-bin-line text-lg' />}
-              onClick={handleDelete}
-            >
-              Delete
-            </Button>
-
-            <Button
-              variant='contained'
-              color='primary'
-              startIcon={<i className='ri-pencil-line text-lg' />}
-              onClick={() => router.push(`/esse-panel/pages/${id}/edit`)}
-            >
-              Edit
-            </Button>
-          </Box>
-        </Box>
+        <DetailActions id={id} href='pages' />
       </Card>
     </div>
   )
