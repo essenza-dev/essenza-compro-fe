@@ -1,5 +1,5 @@
 // Component Imports
-import LangRedirect from '@components/LangRedirect'
+// import LangRedirect from '@components/LangRedirect'
 
 // Config Imports
 import { i18n } from '@configs/i18n'
@@ -18,7 +18,8 @@ const TranslationWrapper = params => {
     params.headersList.get('X-server-header') ?? 'demo-1'
   )
 
-  return doesLangExist || isInvalidLang ? params.children : <LangRedirect redirectPrefix={redirectPrefix} />
+  // return doesLangExist || isInvalidLang ? params.children : <LangRedirect redirectPrefix={redirectPrefix} />
+  return doesLangExist
 }
 
 export default TranslationWrapper

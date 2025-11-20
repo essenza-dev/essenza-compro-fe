@@ -5,8 +5,8 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // Component Imports
-import ReferEarn from '@components/dialogs/refer-earn'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+// import ReferEarn from '@components/dialogs/refer-earn'
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
 
 const DialogReferEarn = () => {
   // Vars
@@ -23,7 +23,7 @@ const DialogReferEarn = () => {
         <Typography color='text.primary'>
           Use Refer & Earn modal to encourage your exiting customers refer their friends & colleague.
         </Typography>
-        <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={ReferEarn} />
+        {/* <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={ReferEarn} /> */}
       </CardContent>
     </Card>
   )

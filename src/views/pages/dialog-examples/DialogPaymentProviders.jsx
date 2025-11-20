@@ -5,8 +5,8 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // Component Imports
-import PaymentProviders from '@components/dialogs/payment-providers'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+// import PaymentProviders from '@components/dialogs/payment-providers'
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
 
 const DialogPaymentProviders = () => {
   // Vars
@@ -23,7 +23,7 @@ const DialogPaymentProviders = () => {
         <Typography color='text.primary'>
           Elegant payment options modal popup example, easy to use in any page.
         </Typography>
-        <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={PaymentProviders} />
+        {/* <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={PaymentProviders} /> */}
       </CardContent>
     </Card>
   )

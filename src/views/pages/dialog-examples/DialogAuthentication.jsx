@@ -5,8 +5,8 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 
 // Component Imports
-import TwoFactorAuth from '@components/dialogs/two-factor-auth'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+// import TwoFactorAuth from '@components/dialogs/two-factor-auth'
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
 
 const DialogAuthentication = () => {
   // Vars
@@ -23,7 +23,7 @@ const DialogAuthentication = () => {
         <Typography color='text.primary'>
           Enhance your application security by enabling two factor authentication.
         </Typography>
-        <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={TwoFactorAuth} />
+        {/* <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={TwoFactorAuth} /> */}
       </CardContent>
     </Card>
   )

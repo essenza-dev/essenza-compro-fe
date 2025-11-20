@@ -5,8 +5,8 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 
 // Component Imports
-import PricingDialog from '@components/dialogs/pricing'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+// import PricingDialog from '@components/dialogs/pricing'
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
 
 const DialogPricing = ({ data }) => {
   // Vars
@@ -24,12 +24,12 @@ const DialogPricing = ({ data }) => {
           <Typography color='text.primary'>
             Elegant pricing options dialog popup example, easy to use in any page.
           </Typography>
-          <OpenDialogOnElementClick
+          {/* <OpenDialogOnElementClick
             element={Button}
             elementProps={buttonProps}
             dialog={PricingDialog}
             dialogProps={{ data }}
-          />
+          /> */}
         </CardContent>
       </Card>
     </>

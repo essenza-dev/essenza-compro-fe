@@ -107,6 +107,7 @@ const ArticlePage = () => {
   const [openDelete, setOpenDelete] = useState(false)
   const router = useRouter()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const actionsData = row => [
     {
       text: 'View',
@@ -190,7 +191,7 @@ const ArticlePage = () => {
         )
       })
     ],
-    []
+    [actionsData]
   )
 
   const deleteStore = () => {

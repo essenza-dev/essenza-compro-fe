@@ -18,8 +18,8 @@ import CardContent from '@mui/material/CardContent'
 import FormControlLabel from '@mui/material/FormControlLabel'
 
 // Component Imports
-import BillingCard from '@components/dialogs/billing-card'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+// import BillingCard from '@components/dialogs/billing-card'
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
 
 // Vars
 const data = [
@@ -187,12 +187,12 @@ const PaymentMethod = () => {
                 </div>
                 <div className='flex flex-col gap-4 p-5'>
                   <div className='flex gap-4'>
-                    <OpenDialogOnElementClick
+                    {/* <OpenDialogOnElementClick
                       element={Button}
                       elementProps={buttonProps(index)}
                       dialog={BillingCard}
                       dialogProps={{ data: data[creditCard] }}
-                    />
+                    /> */}
                     <Button variant='outlined' color='error' size='small'>
                       Delete
                     </Button>

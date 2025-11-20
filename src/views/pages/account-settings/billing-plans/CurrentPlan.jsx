@@ -11,9 +11,9 @@ import AlertTitle from '@mui/material/AlertTitle'
 import LinearProgress from '@mui/material/LinearProgress'
 
 // Component Imports
-import ConfirmationDialog from '@components/dialogs/confirmation-dialog'
-import UpgradePlan from '@components/dialogs/upgrade-plan'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+// import ConfirmationDialog from '@components/dialogs/confirmation-dialog'
+// import UpgradePlan from '@components/dialogs/upgrade-plan'
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
 
 const CurrentPlan = ({ data }) => {
   const buttonProps = (children, color, variant) => ({
@@ -69,7 +69,7 @@ const CurrentPlan = ({ data }) => {
             </div>
           </Grid>
           <Grid item xs={12} className='flex gap-4 flex-wrap'>
-            <OpenDialogOnElementClick
+            {/* <OpenDialogOnElementClick
               element={Button}
               elementProps={buttonProps('Upgrade Plan', 'primary', 'contained')}
               dialog={UpgradePlan}
@@ -80,7 +80,7 @@ const CurrentPlan = ({ data }) => {
               elementProps={buttonProps('Cancel Subscription', 'error', 'outlined')}
               dialog={ConfirmationDialog}
               dialogProps={{ type: 'unsubscribe' }}
-            />
+            /> */}
           </Grid>
         </Grid>
       </CardContent>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+
 import { useRouter } from 'next/navigation'
 
 import Card from '@mui/material/Card'
@@ -26,7 +27,9 @@ import TableHeaderActions from '@/@core/components/table/HeaderActions'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value)
+
   addMeta({ itemRank })
+
   return itemRank.passed
 }
 

@@ -6,11 +6,12 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 
 // Type Imports
-import Link from '@components/Link'
 
 // Component Imports
-import TwoFactorAuth from '@components/dialogs/two-factor-auth'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+// import TwoFactorAuth from '@components/dialogs/two-factor-auth'
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+
+import Link from '@components/Link'
 
 const TwoFactorAuthenticationCard = () => {
   // Vars
@@ -32,7 +33,7 @@ const TwoFactorAuthenticationCard = () => {
               <Link className='text-primary'>Learn more.</Link>
             </Typography>
           </div>
-          <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={TwoFactorAuth} />
+          {/* <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={TwoFactorAuth} /> */}
         </CardContent>
       </Card>
     </>

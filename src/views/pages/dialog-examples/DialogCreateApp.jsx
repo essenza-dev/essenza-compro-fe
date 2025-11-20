@@ -5,8 +5,8 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // Component Imports
-import CreateApp from '@components/dialogs/create-app'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+// import CreateApp from '@components/dialogs/create-app'
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
 
 const DialogCreateApp = () => {
   // Vars
@@ -24,7 +24,7 @@ const DialogCreateApp = () => {
           <Typography color='text.primary'>
             Provide application data with this form to create the app dialog popup example, easy to use in any page.
           </Typography>
-          <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={CreateApp} />
+          {/* <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={CreateApp} /> */}
         </CardContent>
       </Card>
     </>

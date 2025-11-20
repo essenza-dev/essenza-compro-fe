@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+
 import { useRouter } from 'next/navigation'
 
 // MUI Imports
@@ -32,7 +33,9 @@ import CustomInputsDebounced from '@/@core/components/custom-inputs/Debounced'
 // Fuzzy filter untuk search
 const fuzzyFilter = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value)
+
   addMeta({ itemRank })
+
   return itemRank.passed
 }
 

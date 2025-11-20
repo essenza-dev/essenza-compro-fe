@@ -11,5 +11,6 @@ const dictionaries = {
  */
 export const getDictionary = async (locale = 'id') => {
   const loadDictionary = dictionaries[locale] || dictionaries.id
+
   return loadDictionary()
 }

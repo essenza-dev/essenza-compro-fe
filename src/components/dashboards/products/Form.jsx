@@ -42,6 +42,7 @@ const ProductForm = ({ initialData = defaultProduct, onSubmit, onCancel }) => {
 
   const handleChange = e => {
     const { name, value } = e.target
+
     setForm(prev => ({ ...prev, [name]: value }))
   }
 
@@ -51,8 +52,10 @@ const ProductForm = ({ initialData = defaultProduct, onSubmit, onCancel }) => {
 
   const handleImageChange = e => {
     const file = e.target.files[0]
+
     if (file) {
       const imageUrl = URL.createObjectURL(file)
+
       setPreview(imageUrl)
       setForm(prev => ({ ...prev, image: file }))
     }
@@ -61,6 +64,7 @@ const ProductForm = ({ initialData = defaultProduct, onSubmit, onCancel }) => {
   const handleGalleryChange = e => {
     const files = Array.from(e.target.files)
     const urls = files.map(file => URL.createObjectURL(file))
+
     setGalleryPreview(prev => [...prev, ...urls])
     setForm(prev => ({ ...prev, gallery: [...(prev.gallery || []), ...files] }))
   }

@@ -5,8 +5,8 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 
 // Component Imports
-import EditUserInfo from '@components/dialogs/edit-user-info'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+// import EditUserInfo from '@components/dialogs/edit-user-info'
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
 
 const DialogEditUserInfo = () => {
   // Vars
@@ -24,7 +24,7 @@ const DialogEditUserInfo = () => {
           <Typography color='text.primary'>
             Use this modal to modify the existing user&#39;s current information.
           </Typography>
-          <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={EditUserInfo} />
+          {/* <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={EditUserInfo} /> */}
         </CardContent>
       </Card>
     </>

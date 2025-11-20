@@ -5,8 +5,8 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // Component Imports
-import BillingCard from '@components/dialogs/billing-card'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+// import BillingCard from '@components/dialogs/billing-card'
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
 
 const DialogAddCard = () => {
   // Vars
@@ -24,7 +24,7 @@ const DialogAddCard = () => {
           <Typography color='text.primary'>
             Quickly collect the credit card details, built in input mask and form validation support.
           </Typography>
-          <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={BillingCard} />
+          {/* <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={BillingCard} /> */}
         </CardContent>
       </Card>
     </>

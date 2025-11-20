@@ -1,12 +1,11 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+
 import { useRouter } from 'next/navigation'
 
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
-import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import TablePagination from '@mui/material/TablePagination'
 import Typography from '@mui/material/Typography'
@@ -22,15 +21,15 @@ import {
   getSortedRowModel
 } from '@tanstack/react-table'
 
-import Link from '@/components/Link'
 import ActionMenu from '@/@core/components/option-menu/ActionMenu'
 import TableGeneric from '@/@core/components/table/Generic'
-import CustomInputsDebounced from '@/@core/components/custom-inputs/Debounced'
 import TableHeaderActions from '@/@core/components/table/HeaderActions'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value)
+
   addMeta({ itemRank })
+
   return itemRank.passed
 }
 

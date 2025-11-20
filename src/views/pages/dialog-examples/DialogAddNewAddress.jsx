@@ -5,8 +5,8 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // Component Imports
-import AddNewAddress from '@components/dialogs/add-edit-address'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+// import AddNewAddress from '@components/dialogs/add-edit-address'
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
 
 const DialogAddNewAddress = () => {
   // Vars
@@ -23,7 +23,7 @@ const DialogAddNewAddress = () => {
         <Typography color='text.primary'>
           Ready to use form to collect user address data with validation and custom input support.
         </Typography>
-        <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={AddNewAddress} />
+        {/* <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={AddNewAddress} /> */}
       </CardContent>
     </Card>
   )

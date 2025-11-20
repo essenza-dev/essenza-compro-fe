@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+
 import { useRouter } from 'next/navigation'
 
 import Card from '@mui/material/Card'
@@ -54,11 +55,13 @@ const StoreForm = ({ id }) => {
 
   const handleChange = e => {
     const { name, value } = e.target
+
     setData(prev => ({ ...prev, [name]: value }))
   }
 
   const handleSubmit = async e => {
     e.preventDefault()
+
     try {
       if (isEdit) {
         await updateStore(id, Data)
@@ -67,6 +70,7 @@ const StoreForm = ({ id }) => {
         await createStore(Data)
         alert('Store added successfully!')
       }
+
       router.push('/esse-panel/Stores')
     } catch (err) {
       console.error('❌ Error saving Store:', err)

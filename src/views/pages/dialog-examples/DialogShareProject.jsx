@@ -5,8 +5,8 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // Component Imports
-import ShareProject from '@components/dialogs/share-project'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+// import ShareProject from '@components/dialogs/share-project'
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
 
 const DialogShareProject = () => {
   // Vars
@@ -23,7 +23,7 @@ const DialogShareProject = () => {
         <Typography color='text.primary'>
           Elegant Share Project options modal popup example, easy to use in any page.
         </Typography>
-        <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={ShareProject} />
+        {/* <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={ShareProject} /> */}
       </CardContent>
     </Card>
   )

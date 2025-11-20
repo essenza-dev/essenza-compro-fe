@@ -16,6 +16,7 @@ apiClient.interceptors.response.use(
   },
   error => {
     const errRes = error.response || {}
+
     return Promise.resolve({
       success: false,
       status: errRes.status || 500,

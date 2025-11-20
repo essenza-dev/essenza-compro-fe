@@ -17,10 +17,12 @@ import { styled } from '@mui/material/styles'
 import classnames from 'classnames'
 
 // Component Imports
+// import AddEditAddress from '@components/dialogs/add-edit-address'
+
+// import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
+
 import CustomInputHorizontal from '@core/components/custom-inputs/Horizontal'
 import CustomInputVertical from '@core/components/custom-inputs/Vertical'
-import AddEditAddress from '@components/dialogs/add-edit-address'
-import OpenDialogOnElementClick from '@components/dialogs/OpenDialogOnElementClick'
 
 // Styled Components
 const HorizontalContent = styled(Typography, {
@@ -180,7 +182,7 @@ const StepAddress = ({ handleNext }) => {
               />
             ))}
           </Grid>
-          <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={AddEditAddress} />
+          {/* <OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={AddEditAddress} /> */}
         </div>
         <div className='flex flex-col items-start gap-4'>
           <Typography color='text.primary' className='font-medium'>

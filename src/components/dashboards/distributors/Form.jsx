@@ -2,12 +2,13 @@
 
 import { useEffect, useState, useMemo } from 'react'
 
+import { useRouter } from 'next/navigation'
+
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
-import { useRouter } from 'next/navigation'
 
 import CustomTextField from '@/@core/components/custom-inputs/TextField'
 
@@ -56,11 +57,13 @@ const DistributorForm = ({ id }) => {
 
   const handleChange = e => {
     const { name, value } = e.target
+
     setData(prev => ({ ...prev, [name]: value }))
   }
 
   const handleSubmit = async e => {
     e.preventDefault()
+
     try {
       if (isEdit) {
         await updateDistributor(id, Data)
@@ -69,6 +72,7 @@ const DistributorForm = ({ id }) => {
         await createDistributor(Data)
         alert('Distributor added successfully!')
       }
+
       router.push('/esse-panel/distributors')
     } catch (err) {
       console.error('❌ Error saving distributor:', err)

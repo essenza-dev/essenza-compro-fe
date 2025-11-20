@@ -17,7 +17,7 @@ import FormHelperText from '@mui/material/FormHelperText'
 import { useForm, Controller } from 'react-hook-form'
 
 // Component Imports
-import ConfirmationDialog from '@components/dialogs/confirmation-dialog'
+// import ConfirmationDialog from '@components/dialogs/confirmation-dialog'
 
 const AccountDelete = () => {
   // States
@@ -57,7 +57,7 @@ const AccountDelete = () => {
           <Button variant='contained' color='error' type='submit' disabled={!checkboxValue}>
             Deactivate Account
           </Button>
-          <ConfirmationDialog open={open} setOpen={setOpen} type='delete-account' />
+          {/* <ConfirmationDialog open={open} setOpen={setOpen} type='delete-account' /> */}
         </form>
       </CardContent>
     </Card>
