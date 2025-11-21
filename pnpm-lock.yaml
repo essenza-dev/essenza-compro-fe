@@ -141,6 +141,9 @@ importers:
       '@iconify/utils':
         specifier: ^2.1.24
         version: 2.1.24
+      '@netlify/plugin-nextjs':
+        specifier: ^5.14.7
+        version: 5.14.7
       autoprefixer:
         specifier: 10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -761,6 +764,10 @@ packages:
 
   '@mux/playback-core@0.31.2':
     resolution: {integrity: sha512-bhOVTGAuKCQuDzNOc3XvDq7vsgqy2DAacLP0WdJciUKjfZhs3oA11NbKG7qAN6akPnZVfgn0Jn/sJN8TRjE30A==}
+
+  '@netlify/plugin-nextjs@5.14.7':
+    resolution: {integrity: sha512-RJRPGIlaY3M4KA6GxpOlynCPUKCVbtkHwg4ccHhoSVrHgysW3nqw1pX+FBvlBexrUl1JO2zuDFh4enRal9BpAw==}
+    engines: {node: '>=18.0.0'}
 
   '@next/env@14.2.3':
     resolution: {integrity: sha512-W7fd7IbkfmeeY2gXrzJYDx8D2lWKbVoTIj1o1ScPHNzvp30s1AuoEFSdr39bC5sjxJaxTtq3OTCZboNp0lNWHA==}
@@ -4260,6 +4267,8 @@ snapshots:
     dependencies:
       hls.js: 1.6.15
       mux-embed: 5.14.0
+
+  '@netlify/plugin-nextjs@5.14.7': {}
 
   '@next/env@14.2.3': {}
 
