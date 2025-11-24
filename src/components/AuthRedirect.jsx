@@ -1,16 +1,22 @@
 'use client'
 
-// Next Imports
-import { redirect, usePathname } from 'next/navigation'
+import { useEffect } from 'react'
 
-const AuthRedirect = () => {
+import { usePathname, useRouter } from 'next/navigation'
+
+export default function AuthRedirect() {
+  const router = useRouter()
   const pathname = usePathname()
 
-  // ℹ️ Bring me `lang`
-  const redirectUrl = `/esse-panel/login?redirectTo=${pathname}`
-  const login = `/esse-panel/login`
+  useEffect(() => {
+    const token = localStorage.getItem('token')
 
-  return redirect(pathname ? redirectUrl : login)
+    if (!token) {
+      const redirectTo = pathname || '/esse-panel'
+
+      router.replace(`/esse-panel/login?redirectTo=${redirectTo}`)
+    }
+  }, [pathname, router])
+
+  return null
 }
-
-export default AuthRedirect

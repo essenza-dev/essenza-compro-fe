@@ -15,18 +15,15 @@ import InputAdornment from '@mui/material/InputAdornment'
 import Checkbox from '@mui/material/Checkbox'
 import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Divider from '@mui/material/Divider'
 import Alert from '@mui/material/Alert'
 
 // Third-party Imports
-import { signIn } from 'next-auth/react'
 import { Controller, useForm } from 'react-hook-form'
 import { valibotResolver } from '@hookform/resolvers/valibot'
-import { object, minLength, string, email, pipe, nonEmpty } from 'valibot'
+import { object, minLength, string, pipe, nonEmpty } from 'valibot'
 import classnames from 'classnames'
 
 // Component Imports
-import Logo from '@components/layout/shared/Logo'
 import Illustrations from '@components/Illustrations'
 
 // Config Imports
@@ -36,8 +33,10 @@ import themeConfig from '@configs/themeConfig'
 import { useImageVariant } from '@core/hooks/useImageVariant'
 import { useSettings } from '@core/hooks/useSettings'
 
+import { createAuthToken } from '@/services/auth'
+
 const schema = object({
-  email: pipe(string(), minLength(1, 'This field is required'), email('Please enter a valid email address')),
+  username: pipe(string(), minLength(1, 'This field is required')),
   password: pipe(
     string(),
     nonEmpty('This field is required'),
@@ -68,11 +67,7 @@ const Login = ({ mode }) => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    resolver: valibotResolver(schema),
-    defaultValues: {
-      email: 'admin@Essenza.com',
-      password: 'admin'
-    }
+    resolver: valibotResolver(schema)
   })
 
   const authBackground = useImageVariant(mode, lightImg, darkImg)
@@ -88,23 +83,29 @@ const Login = ({ mode }) => {
   const handleClickShowPassword = () => setIsPasswordShown(show => !show)
 
   const onSubmit = async data => {
-    const res = await signIn('credentials', {
-      email: data.email,
-      password: data.password,
-      redirect: false
+    setErrorState(null)
+
+    const res = await createAuthToken({
+      username: data.username,
+      password: data.password
     })
 
-    if (res && res.ok && res.error === null) {
-      const redirectURL = searchParams.get('redirectTo') ?? '/esse-panel/dashboard'
+    console.log(res)
 
-      router.replace(redirectURL)
-    } else {
-      if (res?.error) {
-        const error = JSON.parse(res.error)
+    if (!res.success) {
+      setErrorState({ message: [res.message] })
 
-        setErrorState(error)
-      }
+      return
     }
+
+    const { token, refresh_token } = res.data
+
+    localStorage.setItem('token', token)
+    localStorage.setItem('refreshToken', refresh_token)
+
+    const redirectURL = searchParams.get('redirectTo') ?? '/esse-panel/dashboard'
+
+    router.replace(redirectURL)
   }
 
   return (
@@ -139,13 +140,6 @@ const Login = ({ mode }) => {
             <Typography variant='h4'>{`Welcome to ${themeConfig.templateName}!👋🏻`}</Typography>
             <Typography>Please sign-in to your account and start the adventure</Typography>
           </div>
-          <Alert icon={false} className='bg-primaryLight'>
-            <Typography variant='body2' color='primary'>
-              Email: <span className='font-medium'>admin@Essenza.com</span> / Pass:{' '}
-              <span className='font-medium'>admin</span>
-            </Typography>
-          </Alert>
-
           <form
             noValidate
             action={() => {}}
@@ -154,7 +148,7 @@ const Login = ({ mode }) => {
             className='flex flex-col gap-5'
           >
             <Controller
-              name='email'
+              name='username'
               control={control}
               rules={{ required: true }}
               render={({ field }) => (
@@ -162,15 +156,15 @@ const Login = ({ mode }) => {
                   {...field}
                   fullWidth
                   autoFocus
-                  type='email'
-                  label='Email'
+                  type='text'
+                  label='Email/Username'
                   onChange={e => {
                     field.onChange(e.target.value)
                     errorState !== null && setErrorState(null)
                   }}
-                  {...((errors.email || errorState !== null) && {
+                  {...((errors.username || errorState !== null) && {
                     error: true,
-                    helperText: errors?.email?.message || errorState?.message[0]
+                    helperText: errors?.username?.message || errorState?.message[0]
                   })}
                 />
               )}
@@ -211,30 +205,14 @@ const Login = ({ mode }) => {
             />
             <div className='flex justify-between items-center flex-wrap gap-x-3 gap-y-1'>
               <FormControlLabel control={<Checkbox defaultChecked />} label='Remember me' />
-              <Typography className='text-end' color='primary' component={Link} href='/forgot-password'>
+              <Typography className='text-end' color='primary' component={Link} href='/esse-panel/forgot-password'>
                 Forgot password?
               </Typography>
             </div>
             <Button fullWidth variant='contained' type='submit'>
               Log In
             </Button>
-            <div className='flex justify-center items-center flex-wrap gap-2'>
-              <Typography>New on our platform?</Typography>
-              <Typography component={Link} href='/register' color='primary'>
-                Create an account
-              </Typography>
-            </div>
           </form>
-          <Divider className='gap-3'>or</Divider>
-          <Button
-            color='secondary'
-            className='self-center text-textPrimary'
-            startIcon={<img src='/images/logos/google.png' alt='Google' width={22} />}
-            sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 } }}
-            onClick={() => signIn('google')}
-          >
-            Sign in with Google
-          </Button>
         </div>
       </div>
     </div>

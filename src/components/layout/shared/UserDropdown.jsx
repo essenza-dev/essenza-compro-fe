@@ -5,8 +5,6 @@ import { useRef, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import { signOut } from 'next-auth/react'
-
 // Next Imports
 
 // MUI Imports
@@ -63,10 +61,10 @@ const UserDropdown = () => {
     setOpen(false)
   }
 
-  const handleUserLogout = async () => {
-    await signOut({
-      redirect: false
-    })
+  const handleUserLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
+
     router.push('/esse-panel/login')
   }
 

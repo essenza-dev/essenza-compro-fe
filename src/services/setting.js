@@ -1,13 +1,23 @@
 import apiClient from '@/utils/apiClient'
 
-const updateGeneralSetting = async data => {
-  return await apiClient.put(`/projects/`, data)
+const createSetting = async data => {
+  return await apiClient.post('/settings', data)
 }
 
-const updateSocialMedia = async (id, data) => {
-  return await apiClient.put(`/projects/${id}`, data, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  })
+const getSettings = async (params = {}) => {
+  return await apiClient.get('/settings', { params })
 }
 
-export { updateGeneralSetting, updateSocialMedia }
+const getSettingBySlug = async slug => {
+  return await apiClient.get(`/settings/${slug}`)
+}
+
+const updateSetting = async (slug, data) => {
+  return await apiClient.patch(`/settings/${slug}`, data)
+}
+
+const deleteSetting = async slug => {
+  return await apiClient.delete(`/settings/${slug}`)
+}
+
+export { createSetting, getSettings, getSettingBySlug, updateSetting, deleteSetting }

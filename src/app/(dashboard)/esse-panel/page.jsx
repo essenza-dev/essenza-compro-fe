@@ -1,15 +1,23 @@
-// Next.js imports
-import { redirect } from 'next/navigation'
+'use client'
 
-// Auth import
-import { getServerSession } from 'next-auth'
+import { useEffect } from 'react'
 
-export default async function EssePanelIndexPage() {
-  const session = await getServerSession()
+import { useRouter } from 'next/navigation'
 
-  if (!session) {
-    redirect('/esse-panel/login')
-  }
+export default function EssePanelIndexPage() {
+  const router = useRouter()
 
-  redirect('/esse-panel/dashboard')
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+
+    if (!token) {
+      router.replace('/esse-panel/login')
+
+      return
+    }
+
+    router.replace('/esse-panel/dashboard')
+  }, [router])
+
+  return null
 }

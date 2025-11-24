@@ -1,11 +1,28 @@
-// Third-party Imports
-import { getServerSession } from 'next-auth'
+'use client'
 
-// Component Imports
+import { useEffect, useState } from 'react'
+
+import { useRouter } from 'next/navigation'
+
 import AuthRedirect from '@/components/AuthRedirect'
 
-export default async function AuthGuard({ children }) {
-  const session = await getServerSession()
+export default function AuthGuard({ children }) {
+  const router = useRouter()
+  const [isVerified, setIsVerified] = useState(false)
 
-  return <>{session ? children : <AuthRedirect />}</>
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+
+    if (!token) {
+      router.replace('/esse-panel/login')
+    } else {
+      setIsVerified(true)
+    }
+  }, [router])
+
+  if (!isVerified) {
+    return <AuthRedirect />
+  }
+
+  return <>{children}</>
 }
