@@ -1,4 +1,6 @@
 // MUI Imports
+import Box from '@mui/material/Box'
+import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -12,6 +14,54 @@ import Link from '@components/Link'
 
 // Styles Imports
 import frontCommonStyles from '@views/front-pages/styles.module.css'
+
+const styles = {
+  subscribePlaceholder: {
+    '& .MuiOutlinedInput-input::placeholder': {
+      color: '#757575',
+      fontSize: '13px',
+      opacity: 1
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#757575'
+      },
+      '& .MuiInputBase-input': {
+        padding: '6.5px 14px'
+      }
+    }
+  },
+  dividerFullWidth: {
+    borderBottomWidth: 'inherit',
+    width: { xs: '100vw', sm: '100%' },
+    marginLeft: { xs: '-24px', sm: 0 }
+  },
+  dividerMobileOnly: {
+    borderBottomWidth: 'inherit',
+    margin: '24px 0',
+    width: '100%'
+  },
+  subscribeMobileWrapper: {
+    display: { xs: 'block', sm: 'block', md: 'none' },
+    width: { xs: '100%' }
+  },
+  subscribeDesktopWrapper: {
+    display: { xs: 'none', sm: 'none', md: 'block' }
+  },
+  mobileButtonGroup: {
+    display: { xs: 'flex', sm: 'none' },
+    flexDirection: { xs: 'column' },
+    alignItems: { xs: 'end' }
+  },
+  logoWrapper: {
+    display: { xs: 'flex' },
+    width: { xs: '100%' },
+    alignItems: { xs: 'center' }
+  },
+  rightButtonGroup: {
+    display: { xs: 'none', sm: 'flex' }
+  }
+}
 
 const footerSections = [
   {
@@ -53,20 +103,95 @@ const socialMedia = [
   { id: 'youtube', icon: '/icons/youtube.svg', href: '' }
 ]
 
-function Footer() {
+const SubcribesFooter = () => {
   return (
-    <footer className={'bg-white border-t border-[#D1D1D1]'}>
+    <>
+      <Typography className='text-[#212121] mt-1 font-weigth-400 text-xs'>
+        Enter your email to receive news, information about essenza
+      </Typography>
+      <Grid container spacing={2} mt={2}>
+        <Grid item xs={9}>
+          <TextField
+            className='w-full rounded-[6px]'
+            size='small'
+            placeholder='Input your email address'
+            variant='outlined'
+            sx={styles.subscribePlaceholder}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <Button variant='contained' className='w-full text-[#FFFFFF] rounded-[6px]' size='small' fullWidth>
+            Submit
+          </Button>
+        </Grid>
+      </Grid>
+      <Divider sx={styles.dividerMobileOnly} className='border-t border-[#212121]' />
+      <Grid container spacing={2}>
+        <Grid item>
+          <Typography className='text-[#212121] font-weigth-400 text-md'>Follow Us :</Typography>
+        </Grid>
+        {socialMedia.map(social => (
+          <Grid item key={social.id}>
+            <img className='h-[26px]' src={social.icon} />
+          </Grid>
+        ))}
+      </Grid>
+      <Divider
+        sx={{ ...styles.dividerFullWidth, display: { sm: 'none' } }}
+        className='border-t border-[#212121] mt-6 mb-3'
+      />
+    </>
+  )
+}
+
+const Footer = () => {
+  return (
+    <footer className='bg-white border-t border-[#D1D1D1]'>
       <div className={classnames('pb-6', frontCommonStyles.layoutSpacing)}>
         <Grid container rowSpacing={10} columnSpacing={12}>
+          {/* Left Section */}
           <Grid item xs={12} sm={6} lg={8}>
             <div className='flex flex-col items-start gap-1'>
-              <Link href='/'>
-                <img className='h-[74px]' src={'/logo.svg'} />
-              </Link>
-              <hr className='border-t border-[#212121] w-full'></hr>
+              <Box sx={styles.logoWrapper}>
+                <Link href='/'>
+                  <img className='h-[74px]' src={'/logo.svg'} />
+                </Link>
+
+                {/* Mobile Buttons */}
+                <Grid container className='py-5' spacing={2} sx={styles.mobileButtonGroup}>
+                  <Grid item xs={6}>
+                    <Button
+                      variant='outlined'
+                      className='w-full text-[#757575] border-[#757575] rounded-[6px]'
+                      fullWidth
+                    >
+                      Esperianza
+                    </Button>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Button
+                      variant='outlined'
+                      className='w-full text-[#757575] border-[#757575] rounded-[6px]'
+                      fullWidth
+                    >
+                      Tokopedia
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Box>
+
+              <Divider className='border-t border-[#212121]' sx={styles.dividerFullWidth} />
+
+              {/* Mobile Subscribe */}
+              <Box sx={styles.subscribeMobileWrapper}>
+                <SubcribesFooter />
+              </Box>
+
+              {/* Footer Links */}
               <Grid container>
                 {footerSections.map(section => (
-                  <Grid key={section.sectionId} item xs={12} sm={6} lg={2.5}>
+                  <Grid key={section.sectionId} item xs={6} sm={6} lg={2.5}>
                     {section.links.map(link => (
                       <a key={link.id} href={link.href} className='text-sm hover:underline'>
                         <Typography className='text-[#212121] mt-3 font-weigth-400 text-xs'>{link.label}</Typography>
@@ -77,73 +202,33 @@ function Footer() {
               </Grid>
             </div>
           </Grid>
+
+          {/* Right Section */}
           <Grid item xs={12} sm={6} lg={4}>
-            <Grid container className='flex items-center py-5' spacing={2}>
-              <Grid item xs={6} sm={6} lg={6}>
+            <Grid container className='items-center py-5' spacing={2} sx={styles.rightButtonGroup}>
+              <Grid item xs={6}>
                 <Button variant='outlined' className='w-full text-[#757575] border-[#757575] rounded-[6px]' fullWidth>
                   Esperianza
                 </Button>
               </Grid>
-              <Grid item xs={6} sm={6} lg={6}>
+              <Grid item xs={6}>
                 <Button variant='outlined' className='w-full text-[#757575] border-[#757575] rounded-[6px]' fullWidth>
                   Tokopedia
                 </Button>
               </Grid>
             </Grid>
-            <Typography className='text-[#212121] mt-1 font-weigth-400 text-xs'>
-              Enter your email to receive news, information about essenza
-            </Typography>
-            <Grid container spacing={2} mt={2}>
-              <Grid item xs={9} sm={9} lg={9}>
-                <TextField
-                  className='w-full rounded-[6px]'
-                  size='small'
-                  label=''
-                  placeholder='Input your email address'
-                  variant='outlined'
-                  sx={{
-                    '& .MuiOutlinedInput-input::placeholder': {
-                      color: '#757575',
-                      fontSize: '13px',
-                      opacity: 1
-                    },
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        borderColor: '#757575'
-                      },
-                      '& .MuiInputBase-input': {
-                        padding: '6.5px 14px'
-                      }
-                    }
-                  }}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={3} sm={3} lg={3}>
-                <Button variant='contained' className='w-full text-[#FFFFFF] rounded-[6px]' size='small' fullWidth>
-                  Submit
-                </Button>
-              </Grid>
-            </Grid>
-            <hr className='border-t border-[#212121] w-full mt-6 mb-3'></hr>
-            <Grid container spacing={2}>
-              <Grid item>
-                <Typography className='text-[#212121] font-weigth-400 text-md'>Follow Us :</Typography>
-              </Grid>
-              {socialMedia.map(social => (
-                <Grid item key={social.id}>
-                  <img className='h-[26px]' src={social.icon} />
-                </Grid>
-              ))}
-            </Grid>
+
+            {/* Desktop Subscribe */}
+            <Box sx={styles.subscribeDesktopWrapper}>
+              <SubcribesFooter />
+            </Box>
           </Grid>
         </Grid>
       </div>
+
       <div className='bg-[#414141]'>
-        <div className={'flex items-center justify-center py-3'}>
-          <p className='text-white text-[13px] opacity-[0.92]'>
-            <span>{`©essenza Co. All Rights Reserved`}</span>
-          </p>
+        <div className='flex items-center justify-center py-3'>
+          <p className='text-white text-[13px] opacity-[0.92]'>©essenza Co. All Rights Reserved</p>
         </div>
       </div>
     </footer>
