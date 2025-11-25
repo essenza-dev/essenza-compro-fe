@@ -1,23 +1,23 @@
 import apiClient from '@/utils/apiClient'
 
 const createSetting = async data => {
-  return await apiClient.post('/settings', data)
+  return await apiClient.post('/int/v1/settings', data)
 }
 
 const getSettings = async (params = {}) => {
-  return await apiClient.get('/settings', { params })
+  return await apiClient.get('/int/v1/settings', { params })
 }
 
 const getSettingBySlug = async slug => {
-  return await apiClient.get(`/settings/${slug}`)
+  return await apiClient.get(`/int/v1/settings/${slug}`)
 }
 
 const updateSetting = async (slug, data) => {
-  return await apiClient.patch(`/settings/${slug}`, data)
+  return await apiClient.patch(`/int/v1/settings/${slug}`, data)
 }
 
 const deleteSetting = async slug => {
-  return await apiClient.delete(`/settings/${slug}`)
+  return await apiClient.delete(`/int/v1/settings/${slug}`)
 }
 
 export { createSetting, getSettings, getSettingBySlug, updateSetting, deleteSetting }

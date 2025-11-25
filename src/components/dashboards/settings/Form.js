@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
@@ -14,18 +14,16 @@ import CustomTextField from '@/@core/components/custom-inputs/TextField'
 
 import useSnackbar from '@/@core/hooks/useSnackbar'
 
-import { updateSetting } from '@/services/setting'
-
+import { updateSetting, getSettingBySlug } from '@/services/setting'
 import { handleApiResponse } from '@/utils/handleApiResponse'
 
 const defaultData = {
-  site_name: 'PT. Maju Jaya Keramik',
-  site_description: 'Distributor ubin dan keramik terpercaya dengan berbagai pilihan motif, warna, dan ukuran.',
-  site_logo: '/images/logo.png',
-  favicon: '/favicon.ico',
-  meta_keywords: 'keramik, ubin, granit, lantai, interior, bangunan',
-  meta_description:
-    'PT. Maju Jaya Keramik menyediakan ubin dan keramik berkualitas tinggi untuk hunian dan proyek Anda.'
+  site_name: '',
+  site_description: '',
+  site_logo_url: '',
+  favicon_url: '',
+  meta_keywords: '',
+  meta_description: ''
 }
 
 const SettingsForm = () => {
@@ -37,8 +35,8 @@ const SettingsForm = () => {
   const fields = useMemo(
     () => [
       { name: 'site_name', label: 'Site Name', placeholder: 'Masukkan nama situs', size: 6, required: true },
-      { name: 'favicon', label: 'Favicon URL', placeholder: '/favicon.ico', size: 6, required: true },
-      { name: 'site_logo', label: 'Site Logo URL', placeholder: '/images/logo.png', size: 6, required: true },
+      { name: 'favicon_url', label: 'Favicon URL', placeholder: '/favicon.ico', size: 6, required: true },
+      { name: 'site_logo_url', label: 'Site Logo URL', placeholder: '/images/logo.png', size: 6, required: true },
       {
         name: 'meta_keywords',
         label: 'Meta Keywords',
@@ -65,12 +63,52 @@ const SettingsForm = () => {
     []
   )
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const slugs = Object.keys(defaultData)
+        const results = await Promise.all(slugs.map(slug => getSettingBySlug(slug)))
+        const newData = {}
+
+        results.forEach((res, idx) => {
+          const slug = slugs[idx]
+
+          newData[slug] = res?.data?.value || ''
+        })
+        setData(newData)
+      } catch (err) {
+        error('Gagal memuat data settings')
+      }
+    }
+
+    fetchSettings()
+  }, [])
+
   const handleSubmit = async e => {
     e.preventDefault()
 
-    await handleApiResponse(() => updateSetting(data), {
-      success: msg => success(msg),
-      error: msg => error(msg),
+    const slugs = Object.keys(data)
+
+    const allRequests = slugs.map(slug => {
+      const payload = {
+        label: slug.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+        value: data[slug] || '',
+        description: `Setting for ${slug}`,
+        is_active: true
+      }
+
+      const res = updateSetting(slug, payload)
+
+      console.log('res', res)
+
+      return res
+    })
+
+    console.log(allRequests)
+
+    await handleApiResponse(() => Promise.all(allRequests), {
+      success: msg => success('Semua setting berhasil disimpan!'),
+      error: msg => error('Gagal menyimpan settings'),
       onSuccess: () => setIsEdit(false),
       onError: () => {}
     })
