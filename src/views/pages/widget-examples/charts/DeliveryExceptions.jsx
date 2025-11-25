@@ -70,7 +70,7 @@ const DeliveryExceptions = () => {
           labels: {
             show: true,
             value: {
-              fontSize: '24px',
+              fontSize: { xs: '18px', md: '24px' },
               color: 'var(--mui-palette-text-primary)',
               fontWeight: 500,
               offsetY: -20

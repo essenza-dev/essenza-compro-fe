@@ -13,7 +13,7 @@ const EndSection = () => {
         backgroundColor: '#FFFFFF'
       }}
     >
-      <Typography sx={{ fontSize: '24px', margin: '12px 0', width: '100%', color: '#212121' }}>
+      <Typography sx={{ fontSize: { xs: '18px', md: '24px' }, margin: '12px 0', width: '100%', color: '#212121' }}>
         Timeless Luxury , In Every Surfaces
       </Typography>
     </Box>

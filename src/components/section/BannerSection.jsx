@@ -16,7 +16,7 @@ const styles = {
 
     '& .banner-swiper': {
       width: '100vw',
-      height: '100vh'
+      height: { xs: '65vh', md: '100vh' }
     },
     '& .banner-swiper .swiper-pagination': {
       bottom: '18px !important',
@@ -69,10 +69,9 @@ const styles = {
       fontSize: '16px'
     }
   },
-
   bannerImage: {
     width: '100%',
-    height: '100vh',
+    height: { xs: '65vh', md: '100vh' },
     objectFit: 'cover'
   }
 }

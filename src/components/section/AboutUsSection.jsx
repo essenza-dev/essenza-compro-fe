@@ -22,7 +22,7 @@ const AboutUsSection = () => {
       padding: '1rem 2rem !important'
     },
     title: {
-      fontSize: '24px',
+      fontSize: { xs: '18px', md: '24px' },
       color: 'white'
     },
     description: {

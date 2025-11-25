@@ -74,7 +74,7 @@ const TotalVisitors = () => {
             value: {
               offsetY: -15,
               fontWeight: 500,
-              fontSize: '24px',
+              fontSize: { xs: '18px', md: '24px' },
               formatter: value => `${value}k`,
               color: 'var(--mui-palette-text-primary)'
             },

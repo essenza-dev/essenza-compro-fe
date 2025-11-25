@@ -7,6 +7,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 // MUI Imports
+import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
@@ -49,12 +50,16 @@ const Header = ({ mode }) => {
         <div className={classnames(frontLayoutClasses.navbarContent, styles.navbarContent)}>
           {isBelowLgScreen ? (
             <div className='contents items-center gap-2 sm:gap-4 relative'>
-              <IconButton onClick={() => setIsDrawerOpen(true)} className='-mis-2'>
-                <i className='ri-menu-line text-textPrimary' />
-              </IconButton>
               <Link href='/'>
                 <img className='h-[74px] flex' src={'/logo.svg'} />
               </Link>
+              <IconButton
+                onClick={() => setIsDrawerOpen(true)}
+                className='-mis-2'
+                sx={{ border: '1px solid #212121', borderRadius: '6px' }}
+              >
+                <Box component='img' src='/icons/menu.svg' alt='menu' />
+              </IconButton>
               <FrontMenu mode={mode} isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
             </div>
           ) : (

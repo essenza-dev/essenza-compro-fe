@@ -30,7 +30,7 @@ const VisionSection = () => {
       paddingRight: '2rem !important'
     },
     title: {
-      fontSize: '24px',
+      fontSize: { xs: '18px', md: '24px' },
       color: '#000000'
     },
     description: {

@@ -77,7 +77,7 @@ const styles = {
   },
 
   titleBanner: {
-    fontSize: '24px',
+    fontSize: { xs: '18px', md: '24px' },
     margin: '12px 0',
     width: '100%',
     color: '#212121',
@@ -85,7 +85,7 @@ const styles = {
   },
   bannerImage: {
     width: '100%',
-    height: '360px',
+    height: { xs: '150px', md: '360px' },
     objectFit: 'cover',
     borderRadius: '10px'
   }
@@ -112,7 +112,15 @@ const CardCarousel = ({ data = defData, title, bgColor, duration = 1000 }) => {
           autoplay={{ delay: duration }}
           loop
           slidesPerView={3}
-          spaceBetween={30}
+          spaceBetween={10}
+          breakpoints={{
+            0: {
+              slidesPerView: 2
+            },
+            768: {
+              slidesPerView: 3
+            }
+          }}
         >
           {data.map((img, i) => (
             <SwiperSlide key={i}>

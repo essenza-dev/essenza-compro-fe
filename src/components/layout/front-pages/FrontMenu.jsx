@@ -89,7 +89,7 @@ const Wrapper = props => {
 
 const FrontMenu = props => {
   // Props
-  const { isDrawerOpen, setIsDrawerOpen, onClickSearch } = props
+  const { isDrawerOpen, setIsDrawerOpen } = props
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   const handleClickSearch = () => {
@@ -104,6 +104,8 @@ const FrontMenu = props => {
     if (!isBelowLgScreen && isDrawerOpen) {
       setIsDrawerOpen(false)
     }
+
+    console.log('isBelowLgScreen', isBelowLgScreen)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBelowLgScreen])
 

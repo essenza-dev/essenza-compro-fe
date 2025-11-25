@@ -19,7 +19,7 @@ const CustomIconButton = styled(MuiButton)(({ color, size, theme, variant }) => 
       : {
           ...(size === 'large'
             ? {
-                fontSize: '24px',
+                fontSize: { xs: '18px', md: '24px' },
                 padding: theme.spacing(variant === 'outlined' ? 2 : 2.25),
                 '& i, & svg': {
                   fontSize: 'inherit'

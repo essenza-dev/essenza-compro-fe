@@ -19,7 +19,7 @@ const HeaderPageSection = ({ title, subTitle, bgImage }) => {
       top: '45vh'
     },
     subTitle: {
-      fontSize: '24px',
+      fontSize: { xs: '18px', md: '24px' },
       fontWeight: 300,
       color: '#FFFFFF',
       textAlign: 'center',

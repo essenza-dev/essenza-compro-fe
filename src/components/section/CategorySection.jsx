@@ -14,7 +14,7 @@ import frontCommonStyles from '@views/front-pages/styles.module.css'
 const styles = {
   sectionBox: {},
   title: {
-    fontSize: '24px',
+    fontSize: { xs: '18px', md: '24px' },
     margin: '12px 0',
     width: '100%',
     color: '#212121'
@@ -22,11 +22,11 @@ const styles = {
   cardWrapper: {
     borderRadius: '6px',
     opacity: 0.5,
-    height: '360px',
+    height: { xs: '170px', md: '360px' },
     position: 'relative',
     overflow: 'hidden',
     '& img': {
-      height: '360px',
+      height: { xs: '170px', md: '360px' },
       width: '100%',
       objectFit: 'cover',
       position: 'absolute',
@@ -37,7 +37,7 @@ const styles = {
   },
   cardLabel: {
     zIndex: 10,
-    fontSize: '24px',
+    fontSize: { xs: '18px', md: '24px' },
     position: 'absolute',
     top: '47%',
     left: '50%',
@@ -48,11 +48,11 @@ const styles = {
   },
   bigCard: {
     borderRadius: '10px',
-    height: '90vh',
+    height: { xs: '45vh', md: '90vh' },
     position: 'relative',
     overflow: 'hidden',
     '& img': {
-      height: '90vh',
+      height: { xs: '45vh', md: '90vh' },
       width: '100%',
       objectFit: 'cover'
     }
@@ -83,10 +83,9 @@ const CategorySection = () => {
 
       <Grid container spacing={3}>
         {data.map(item => (
-          <Grid key={item.id} item xs={12} sm={6} lg={4}>
+          <Grid key={item.id} item xs={6} sm={6} lg={4}>
             <Card sx={styles.cardWrapper}>
               <img src={item.image} alt={item.label} />
-
               <Typography sx={styles.cardLabel}>{item.label}</Typography>
             </Card>
           </Grid>
