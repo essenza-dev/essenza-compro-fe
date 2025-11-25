@@ -100,8 +100,6 @@ const defData = [
 ]
 
 const CardCarousel = ({ data = defData, title, bgColor, duration = 1000 }) => {
-  console.log('defData', defData)
-
   return (
     <Box sx={styles.containerBox(bgColor)}>
       <Box className={classnames('pb-6', frontCommonStyles.layoutSpacing)} sx={styles.bannerBox}>

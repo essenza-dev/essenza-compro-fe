@@ -48,7 +48,7 @@ const Header = ({ mode }) => {
       >
         <div className={classnames(frontLayoutClasses.navbarContent, styles.navbarContent)}>
           {isBelowLgScreen ? (
-            <div className='contents items-center gap-2 sm:gap-4'>
+            <div className='contents items-center gap-2 sm:gap-4 relative'>
               <IconButton onClick={() => setIsDrawerOpen(true)} className='-mis-2'>
                 <i className='ri-menu-line text-textPrimary' />
               </IconButton>
@@ -58,7 +58,7 @@ const Header = ({ mode }) => {
               <FrontMenu mode={mode} isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
             </div>
           ) : (
-            <div className='contents items-center gap-10'>
+            <div className='contents items-center gap-10 relative'>
               <Link href='/'>
                 <img className='h-[74px] flex' src={'/logo.svg'} />
               </Link>

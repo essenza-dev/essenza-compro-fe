@@ -1,13 +1,14 @@
 'use client'
 
 // React Imports
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 // Next Imports
-import { usePathname, useParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
 
 // MUI Imports
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Drawer from '@mui/material/Drawer'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -16,11 +17,7 @@ import IconButton from '@mui/material/IconButton'
 // Third-party Imports
 import classnames from 'classnames'
 
-// Hook Imports
-import { useIntersection } from '@/hooks/useIntersection'
-
-// Component Imports
-import DropdownMenu from './DropdownMenu'
+import SearchBar from './SearchBar'
 
 const staticMenu = [
   {
@@ -92,15 +89,16 @@ const Wrapper = props => {
 
 const FrontMenu = props => {
   // Props
-  const { isDrawerOpen, setIsDrawerOpen, mode } = props
+  const { isDrawerOpen, setIsDrawerOpen, onClickSearch } = props
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+
+  const handleClickSearch = () => {
+    setIsSearchOpen(!isSearchOpen)
+  }
 
   // Hooks
-  const pathname = usePathname()
   const isBelowLgScreen = useMediaQuery(theme => theme.breakpoints.down('lg'))
-  const { intersections } = useIntersection()
   const { lang: locale } = useParams()
-
-  console.log('locale', locale)
 
   useEffect(() => {
     if (!isBelowLgScreen && isDrawerOpen) {
@@ -110,22 +108,31 @@ const FrontMenu = props => {
   }, [isBelowLgScreen])
 
   return (
-    <Wrapper isBelowLgScreen={isBelowLgScreen} isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen}>
-      {staticMenu.map((menu, i) => (
-        <Typography key={menu.id} component={Link} href={`/${locale}${menu.href}`} className={'text-[#212121]'}>
-          {menu.label}
+    <>
+      <Wrapper isBelowLgScreen={isBelowLgScreen} isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen}>
+        {staticMenu.map((menu, i) => (
+          <Typography key={i} component={Link} href={`/${locale}${menu.href}`} className={'text-[#212121]'}>
+            {menu.label}
+          </Typography>
+        ))}
+        <Typography
+          component={Link}
+          href={`/${locale}`}
+          className={'bg-[#C1A658] px-[40px] text-[#ffffff] py-[9px] rounded-[6px]'}
+          color='text.primary'
+        >
+          Esperianza
         </Typography>
-      ))}
-      <Typography
-        component={Link}
-        href={`/${locale}`}
-        className={'bg-[#C1A658] px-[40px] text-[#ffffff] py-[9px] rounded-[6px]'}
-        color='text.primary'
-      >
-        Esperianza
-      </Typography>
-      <img src='/icons/search.svg' alt='search' />
-    </Wrapper>
+        <Box
+          component='img'
+          src='/icons/search.svg'
+          alt='search'
+          className='cursor-pointer'
+          onClick={handleClickSearch}
+        />
+      </Wrapper>
+      <SearchBar checked={isSearchOpen} locale={locale} />
+    </>
   )
 }
 

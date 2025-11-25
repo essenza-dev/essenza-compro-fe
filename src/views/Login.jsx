@@ -90,8 +90,6 @@ const Login = ({ mode }) => {
       password: data.password
     })
 
-    console.log(res)
-
     if (!res.success) {
       setErrorState({ message: [res.message] })
 
