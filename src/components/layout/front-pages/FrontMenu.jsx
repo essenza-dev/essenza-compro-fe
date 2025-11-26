@@ -124,7 +124,6 @@ const FrontMenu = props => {
       setIsDrawerOpen(false)
     }
 
-    console.log('isBelowLgScreen', isBelowLgScreen)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBelowLgScreen])
 

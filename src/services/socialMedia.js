@@ -1,23 +1,23 @@
 import apiClient from '@/utils/apiClient'
 
 const getSocialMedias = async (params = {}) => {
-  return await apiClient.get('/social-media', { params })
+  return await apiClient.get('/int/v1/social-media', { params })
 }
 
 const createSocialMedia = async data => {
-  return await apiClient.post('/social-media', data)
+  return await apiClient.post('/int/v1/social-media', data)
 }
 
 const getSocialMediaById = async id => {
-  return await apiClient.get(`/social-media/${id}`)
+  return await apiClient.get(`/int/v1/social-media/${id}`)
 }
 
 const updateSocialMedia = async (id, data) => {
-  return await apiClient.patch(`/social-media/${id}`, data)
+  return await apiClient.patch(`/int/v1/social-media/${id}`, data)
 }
 
 const deleteSocialMedia = async id => {
-  return await apiClient.delete(`/social-media/${id}`)
+  return await apiClient.delete(`/int/v1/social-media/${id}`)
 }
 
 export { getSocialMedias, createSocialMedia, getSocialMediaById, updateSocialMedia, deleteSocialMedia }

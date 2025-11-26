@@ -23,7 +23,6 @@ const DialogBasic = props => {
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth='sm'>
-      {/* Header */}
       <DialogTitle className='flex justify-between items-center capitalize'>
         <span>{title}</span>
         <IconButton onClick={onClose} size='small'>
@@ -31,19 +30,14 @@ const DialogBasic = props => {
         </IconButton>
       </DialogTitle>
 
-      {/* Content */}
       <DialogContent className='space-y-3'>
         {description && (
           <Typography variant='body1' color='text.secondary'>
             {description}
           </Typography>
         )}
-
-        {/* Tempat isi custom */}
         {children}
       </DialogContent>
-
-      {/* Action Buttons */}
       {actions ? (
         <DialogActions className='p-4'>{actions}</DialogActions>
       ) : (
@@ -62,7 +56,7 @@ const DialogBasic = props => {
             variant='contained'
             className='w-1/3'
             color={colorConfirm}
-            startIcon={<i className='ri-save-3-line text-lg' />}
+            startIcon={<i className='ri-check-line text-lg' />}
           >
             Confirm
           </Button>
