@@ -1,5 +1,9 @@
 'use client'
 
+import Link from 'next/link'
+
+import { useParams } from 'next/navigation'
+
 import { Box, Typography, useMediaQuery } from '@mui/material'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -116,6 +120,7 @@ const defData = [
 
 const CardProductCarousel = ({ data = defData, title, bgColor, duration = 1000 }) => {
   const isMobile = useMediaQuery('(max-width:768px)')
+  const { lang: locale } = useParams()
 
   return (
     <Box sx={styles.containerBox(bgColor)}>
@@ -141,12 +146,16 @@ const CardProductCarousel = ({ data = defData, title, bgColor, duration = 1000 }
         >
           {data.map((img, i) => (
             <SwiperSlide key={i}>
-              <Box component='img' src={img.src} alt={`Banner ${img.src}`} sx={styles.bannerImage} />
-              <Typography sx={styles.titleProduct}>{img.title}</Typography>
-              <Typography sx={styles.descProduct}>{img.title}</Typography>
-              <Box component='img' src={img.src} alt={`Banner ${img.src}`} sx={styles.bannerImage} />
-              <Typography sx={styles.titleProduct}>{img.title}</Typography>
-              <Typography sx={styles.descProduct}>{img.title}</Typography>
+              <Link href={`/${locale}/product/123`}>
+                <Box component='img' src={img.src} alt={`Banner ${img.src}`} sx={styles.bannerImage} />
+                <Typography sx={styles.titleProduct}>{img.title}</Typography>
+                <Typography sx={styles.descProduct}>{img.title}</Typography>
+              </Link>
+              <Link href={`/${locale}/product/123`}>
+                <Box component='img' src={img.src} alt={`Banner ${img.src}`} sx={styles.bannerImage} />
+                <Typography sx={styles.titleProduct}>{img.title}</Typography>
+                <Typography sx={styles.descProduct}>{img.title}</Typography>
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>

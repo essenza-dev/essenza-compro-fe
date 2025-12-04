@@ -14,6 +14,7 @@ import Link from '@components/Link'
 
 // Styles Imports
 import frontCommonStyles from '@views/front-pages/styles.module.css'
+import CustomButton from '@/@core/components/mui/Button'
 
 const styles = {
   subscribePlaceholder: {
@@ -170,22 +171,10 @@ const Footer = () => {
                 {/* Mobile Buttons */}
                 <Grid container className='py-5' spacing={2} sx={styles.mobileButtonGroup}>
                   <Grid item xs={6} className='w-full'>
-                    <Button
-                      variant='outlined'
-                      className='text-[#757575] border-[#757575] rounded-[6px] py-[4px]'
-                      fullWidth
-                    >
-                      Esperianza
-                    </Button>
+                    <CustomButton>Esperianza</CustomButton>
                   </Grid>
                   <Grid item xs={6} className='w-full'>
-                    <Button
-                      variant='outlined'
-                      className='text-[#757575] border-[#757575] rounded-[6px] py-[4px]'
-                      fullWidth
-                    >
-                      Tokopedia
-                    </Button>
+                    <CustomButton>Tokopedia</CustomButton>
                   </Grid>
                 </Grid>
               </Box>
@@ -216,14 +205,10 @@ const Footer = () => {
           <Grid item xs={12} sm={6} lg={4}>
             <Grid container className='items-center py-5' spacing={2} sx={styles.rightButtonGroup}>
               <Grid item xs={6}>
-                <Button variant='outlined' className='w-full text-[#757575] border-[#757575] rounded-[6px]' fullWidth>
-                  Esperianza
-                </Button>
+                <CustomButton>Esperianza</CustomButton>
               </Grid>
               <Grid item xs={6}>
-                <Button variant='outlined' className='w-full text-[#757575] border-[#757575] rounded-[6px]' fullWidth>
-                  Tokopedia
-                </Button>
+                <CustomButton>Tokopedia</CustomButton>
               </Grid>
             </Grid>
 
