@@ -21,17 +21,28 @@ const styles = {
   },
   cardWrapper: {
     borderRadius: '6px',
-    opacity: 0.5,
     height: { xs: '170px', md: '360px' },
     position: 'relative',
-    overflow: 'hidden',
+    overflow: 'hidden'
+  },
+  imageWrapper: {
+    position: 'relative',
+    width: '100%',
+    height: '100%',
     '& img': {
-      height: { xs: '170px', md: '360px' },
       width: '100%',
+      height: '100%',
       objectFit: 'cover',
+      display: 'block'
+    },
+    '&::after': {
+      content: '""',
       position: 'absolute',
       top: 0,
       left: 0,
+      width: '100%',
+      height: '100%',
+      background: 'rgba(0,0,0,0.5)',
       zIndex: 5
     }
   },
@@ -44,7 +55,12 @@ const styles = {
     transform: 'translate(-50%, -50%)',
     textAlign: 'center',
     width: '100%',
-    color: '#FFFFFF'
+    color: '#FFFFFF',
+    fontFamily: 'Maison Neue',
+    fontWeight: 600,
+    '& span': {
+      fontWeight: 100
+    }
   },
   bigCard: {
     borderRadius: '10px',
@@ -52,28 +68,40 @@ const styles = {
     position: 'relative',
     overflow: 'hidden',
     '& img': {
-      height: { xs: '45vh', md: '90vh' },
+      height: '100%',
       width: '100%',
       objectFit: 'cover'
+    },
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      background: 'rgba(0,0,0,0.45)',
+      zIndex: 5
     }
   },
+
   bigCardButton: {
     position: 'absolute',
     right: '24px',
     bottom: '24px',
     color: 'white',
     borderColor: 'white',
-    borderRadius: '10px'
+    borderRadius: '10px',
+    zIndex: 10
   }
 }
 
 const data = [
-  { id: 1, label: 'Marble Series', image: '/images/illustrations/photos/category-1.jpg' },
-  { id: 2, label: 'Marble Series', image: '/images/illustrations/photos/category-2.jpg' },
-  { id: 3, label: 'Marble Series', image: '/images/illustrations/photos/category-3.jpg' },
-  { id: 4, label: 'Marble Series', image: '/images/illustrations/photos/category-4.jpg' },
-  { id: 5, label: 'Marble Series', image: '/images/illustrations/photos/category-5.jpg' },
-  { id: 6, label: 'Marble Series', image: '/images/illustrations/photos/category-6.jpg' }
+  { id: 1, label: 'Marble', image: '/images/illustrations/photos/category-1.jpg' },
+  { id: 2, label: 'Stone', image: '/images/illustrations/photos/category-2.jpg' },
+  { id: 3, label: 'Classic', image: '/images/illustrations/photos/category-3.jpg' },
+  { id: 4, label: 'Granity', image: '/images/illustrations/photos/category-4.jpg' },
+  { id: 5, label: 'Cemento', image: '/images/illustrations/photos/category-5.jpg' },
+  { id: 6, label: 'Wood', image: '/images/illustrations/photos/category-6.jpg' }
 ]
 
 const CategorySection = () => {
@@ -85,8 +113,12 @@ const CategorySection = () => {
         {data.map(item => (
           <Grid key={item.id} item xs={6} sm={6} lg={4}>
             <Card sx={styles.cardWrapper}>
-              <img src={item.image} alt={item.label} />
-              <Typography sx={styles.cardLabel}>{item.label}</Typography>
+              <Box sx={styles.imageWrapper}>
+                <img src={item.image} alt={item.label} />
+              </Box>
+              <Typography sx={styles.cardLabel}>
+                {item.label} <span>Series</span>
+              </Typography>
             </Card>
           </Grid>
         ))}
@@ -96,7 +128,6 @@ const CategorySection = () => {
         <Grid item xs={12}>
           <Card sx={styles.bigCard}>
             <img src='/images/illustrations/photos/banner-category.jpg' alt='go' />
-
             <Button sx={styles.bigCardButton} variant='outlined' size='small'>
               Go To Essenza New Design
             </Button>

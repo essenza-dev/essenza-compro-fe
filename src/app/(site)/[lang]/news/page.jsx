@@ -1,5 +1,17 @@
+import BannerSection from '@/components/section/BannerSection'
+import EndSection from '@/components/section/EndSection'
+import NewsSection from '@/components/section/NewsSection'
+
 const NewsPage = () => {
-  return <h1>Welcome to News Page</h1>
+  // Hooks
+
+  return (
+    <>
+      <BannerSection />
+      <NewsSection />
+      <EndSection />
+    </>
+  )
 }
 
 export default NewsPage

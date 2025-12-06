@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, Grid, Card } from '@mui/material'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 
@@ -22,18 +22,18 @@ const styles = {
     overflow: 'visible',
     '& .banner-swiper': {
       paddingTop: { xs: 0, sm: '56px' },
-      paddingBottom: { xs: '48px', sm: 0 },
+      paddingBottom: { xs: '48px', sm: '56px' },
       marginTop: { xs: '52px', sm: 'unset' }
     },
     '& .banner-swiper .swiper-pagination': {
-      bottom: { xs: '14px !important', sm: '36px !important' },
-      left: { xs: '-4px !important', sm: '24px !important' },
+      bottom: { xs: '14px !important', sm: '0 !important' },
+      left: { xs: '-4px !important', sm: '0 !important' },
       textAlign: 'left !important',
       width: 'auto !important'
     },
     '& .banner-swiper .swiper-pagination .swiper-pagination-bullet': {
-      backgroundColor: 'black',
-      border: '1px solid white'
+      backgroundColor: '#FFFFFF',
+      border: '1.5px solid #ACACAC'
     },
     '& .banner-swiper .swiper-pagination .swiper-pagination-bullet-active': {
       borderColor: '#BD8100',
@@ -93,18 +93,55 @@ const styles = {
     height: { xs: '150px', md: '360px' },
     objectFit: 'cover',
     borderRadius: '10px'
+  },
+  cardWrapper: {
+    borderRadius: '6px',
+    height: { xs: '170px', md: '360px' },
+    position: 'relative',
+    overflow: 'hidden'
+  },
+  imageWrapper: {
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    '& img': {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+      display: 'block'
+    },
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      background: 'rgba(0,0,0,0.5)',
+      zIndex: 5
+    }
+  },
+  cardLabel: {
+    zIndex: 10,
+    fontSize: { xs: '18px', md: '24px' },
+    position: 'absolute',
+    top: '47%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    textAlign: 'center',
+    width: '100%',
+    color: '#FFFFFF',
+    fontFamily: 'Maison Neue',
+    fontWeight: 600,
+    '& span': {
+      fontWeight: 100
+    }
   }
 }
 
-const defData = [
-  { id: 1, src: '/images/illustrations/photos/banner-1.png', title: 'Banner 1' },
-  { id: 2, src: '/images/illustrations/photos/banner-2.png', title: 'Banner 2' },
-  { id: 3, src: '/images/illustrations/photos/banner-3.png', title: 'Banner 3' },
-  { id: 4, src: '/images/illustrations/photos/banner-4.jpg', title: 'Banner 4' },
-  { id: 5, src: '/images/illustrations/photos/banner-5.jpg', title: 'Banner 5' }
-]
+const CardCarousel = props => {
+  const { data = [], title, bgColor, duration = 1000, isCategory = false } = props
 
-const CardCarousel = ({ data = defData, title, bgColor, duration = 1000 }) => {
   return (
     <Box sx={styles.containerBox(bgColor)}>
       <Box className={classnames(frontCommonStyles.layoutSpacing)} sx={styles.bannerBox}>
@@ -127,12 +164,35 @@ const CardCarousel = ({ data = defData, title, bgColor, duration = 1000 }) => {
             }
           }}
         >
-          {data.map((img, i) => (
-            <SwiperSlide key={i}>
-              <Box component='img' src={img.src} alt={`Banner ${img.src}`} sx={styles.bannerImage} />
-              <Typography sx={styles.descriptionBanner}>{img.title}</Typography>
-            </SwiperSlide>
-          ))}
+          {isCategory ? (
+            <>
+              <Grid container spacing={3}>
+                {data.map((item, i) => (
+                  <SwiperSlide key={i}>
+                    <Grid key={item.id} item xs={6} sm={6} lg={4}>
+                      <Card sx={styles.cardWrapper}>
+                        <Box sx={styles.imageWrapper}>
+                          <img src={item.src} alt={item.title} />
+                        </Box>
+                        <Typography sx={styles.cardLabel}>
+                          {item.title} <span>Series</span>
+                        </Typography>
+                      </Card>
+                    </Grid>
+                  </SwiperSlide>
+                ))}
+              </Grid>
+            </>
+          ) : (
+            <>
+              {data.map((img, i) => (
+                <SwiperSlide key={i}>
+                  <Box component='img' src={img.src} alt={`Banner ${img.src}`} sx={styles.bannerImage} />
+                  <Typography sx={styles.descriptionBanner}>{img.title}</Typography>
+                </SwiperSlide>
+              ))}
+            </>
+          )}
         </Swiper>
       </Box>
     </Box>

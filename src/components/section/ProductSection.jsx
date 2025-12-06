@@ -7,16 +7,16 @@ import CardProductCarousel from '@/components/CardProductCarousel'
 
 const ProductSection = () => {
   const data = [
-    { id: 1, src: '/images/product/sample-1.jpg', title: 'Banner 1' },
-    { id: 2, src: '/images/product/sample-2.jpg', title: 'Banner 2' },
-    { id: 3, src: '/images/product/sample-3.jpg', title: 'Banner 3' },
-    { id: 4, src: '/images/product/sample-3.jpg', title: 'Banner 4' },
-    { id: 5, src: '/images/product/sample-1.jpg', title: 'Banner 5' },
-    { id: 1, src: '/images/product/sample-2.jpg', title: 'Banner 1' },
-    { id: 2, src: '/images/product/sample-1.jpg', title: 'Banner 2' },
-    { id: 3, src: '/images/product/sample-2.jpg', title: 'Banner 3' },
-    { id: 4, src: '/images/product/sample-3.jpg', title: 'Banner 4' },
-    { id: 5, src: '/images/product/sample-2.jpg', title: 'Banner 5' }
+    { id: 1, src: '/images/product/sample-1.jpg', title: 'Marble' },
+    { id: 2, src: '/images/product/sample-2.jpg', title: 'Marble' },
+    { id: 3, src: '/images/product/sample-3.jpg', title: 'Marble' },
+    { id: 4, src: '/images/product/sample-3.jpg', title: 'Marble' },
+    { id: 5, src: '/images/product/sample-1.jpg', title: 'Marble' },
+    { id: 1, src: '/images/product/sample-2.jpg', title: 'Marble' },
+    { id: 2, src: '/images/product/sample-1.jpg', title: 'Marble' },
+    { id: 3, src: '/images/product/sample-2.jpg', title: 'Marble' },
+    { id: 4, src: '/images/product/sample-3.jpg', title: 'Marble' },
+    { id: 5, src: '/images/product/sample-2.jpg', title: 'Marble' }
   ]
 
   const isMobile = useMediaQuery('(max-width:768px)')

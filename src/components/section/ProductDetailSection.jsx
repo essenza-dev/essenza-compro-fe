@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 
+import Link from 'next/link'
+
 import { Divider, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -83,6 +85,7 @@ const styles = {
     borderRadius: '6px'
   },
   boxSpec: {
+    mt: 4,
     borderRadius: '6px',
     boxShadow: ' 0px 0.75px 2.25px 0.75px #00000026',
     boxShadow: ' 0px 0.75px 1.5px 0px #0000004D'
@@ -148,9 +151,13 @@ const FeatureItem = ({ data }) => {
   return (
     <Box sx={{ width: '124px', textAlign: 'center', '& img': { height: '24px', width: 'auto' } }}>
       <Box component={'img'} src={`/icons/${data?.icon}.svg`} />
-      <Typography sx={{ color: '#212121', fontWeight: 500, fontSize: '14px', mt: 1 }}>{data?.label}</Typography>
+      <Typography sx={{ color: '#212121', fontWeight: 500, fontSize: { xs: '10px', sm: '14px' }, mt: 1 }}>
+        {data?.label}
+      </Typography>
       <Divider sx={{ color: '#212121', mt: 1 }} />
-      <Typography sx={{ color: '#212121', fontWeight: 500, fontSize: '12px', mt: 1 }}>{data?.value}</Typography>
+      <Typography sx={{ color: '#212121', fontWeight: 500, fontSize: { xs: '8px', sm: '12px' }, mt: 1 }}>
+        {data?.value}
+      </Typography>
     </Box>
   )
 }
@@ -177,12 +184,19 @@ const ProductDetailSection = () => {
               <Box mt={8} />
               <Box sx={{ display: 'flex', flexDirection: { xs: 'row', sm: 'column' }, gap: { xs: 2, sm: 2 } }}>
                 <Box sx={styles.boxButton}>
-                  <CustomButton borderColor='#BB8B05'>Request a Sample</CustomButton>
+                  <a
+                    href='https://wa.me/+6282295228745?text=Halo%Essenza%20Team%2C%20saya%20melihat%20produk-produk%Essenza%20dan%20sangat%20tertarik.%20Boleh%20dibantu%20info%20lebih%20lengkapnya%3F%20Terima%20kasih%20😊'
+                    target='_blank'
+                  >
+                    <CustomButton borderColor='#BB8B05'>Request a Sample</CustomButton>
+                  </a>
                 </Box>
                 <Box sx={styles.boxButton}>
-                  <CustomButton borderColor='#BB8B05'>
-                    {isMobile ? 'Download Catalogue' : 'Download All Catalogue'}
-                  </CustomButton>
+                  <a href='/catalogue/ESSENZA-ECATALOGUE-2025.pdf' target='_blank'>
+                    <CustomButton borderColor='#BB8B05'>
+                      {isMobile ? 'Download Catalogue' : 'Download All Catalogue'}
+                    </CustomButton>
+                  </a>
                 </Box>
               </Box>
             </Grid>
