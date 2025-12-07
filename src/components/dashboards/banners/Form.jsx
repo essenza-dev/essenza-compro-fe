@@ -65,7 +65,7 @@ const BannersForm = ({ id }) => {
       onSuccess: () =>
         setTimeout(() => {
           router.push('/esse-panel/banners')
-        }, 2000),
+        }, 1000),
       onError: () => {
         setLoading(false)
       }
@@ -103,7 +103,7 @@ const BannersForm = ({ id }) => {
         setPreview(res.data.image)
       }
     } catch {
-      error('Failed to load social media')
+      error('Failed to load Banner')
     }
   }
 

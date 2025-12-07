@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation'
 // MUI Imports
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
-import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import TablePagination from '@mui/material/TablePagination'
 import Typography from '@mui/material/Typography'
@@ -24,11 +23,13 @@ import {
 } from '@tanstack/react-table'
 
 // Components
-import Link from '@/components/Link'
 import ActionMenu from '@/@core/components/option-menu/ActionMenu'
 import TableGeneric from '@/@core/components/table/Generic'
-import CustomInputsDebounced from '@/@core/components/custom-inputs/Debounced'
 import TableHeaderActions from '@/@core/components/table/HeaderActions'
+import { deleteBrochure, getBrochures } from '@/services/brochures'
+import useSnackbar from '@/@core/hooks/useSnackbar'
+import BackdropLoading from '@/components/BackdropLoading'
+import DialogBasic from '@/components/DialogBasic'
 
 // Fuzzy filter untuk search
 const fuzzyFilter = (row, columnId, value, addMeta) => {
@@ -39,46 +40,20 @@ const fuzzyFilter = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
-// Dummy data brochures
-const defaultBrochures = [
-  {
-    id: 1,
-    title: 'Katalog Produk Global 2025',
-    file_url: '/files/brochures/global-2025.pdf',
-    description: 'Katalog lengkap produk Global Nusantara tahun 2025.',
-    created_at: '2025-01-01 09:00'
-  },
-  {
-    id: 2,
-    title: 'Panduan Produk Keramik',
-    file_url: '/files/brochures/panduan-keramik.pdf',
-    description: 'Panduan lengkap pemilihan dan pemasangan keramik.',
-    created_at: '2025-02-10 10:00'
-  }
-]
-
 const columnHelper = createColumnHelper()
 
 const BrochurePage = () => {
-  const [data, setData] = useState(defaultBrochures)
+  const [data, setData] = useState([])
+  const [pagination, setPagination] = useState({ page: 0, page_size: 10 })
   const [filteredData, setFilteredData] = useState(data)
   const [globalFilter, setGlobalFilter] = useState('')
-  const router = useRouter()
+  const [deleteIndex, setDeleteIndex] = useState(null)
+  const [loading, setLoading] = useState(false)
 
-  const deleteBrochure = id => {
-    setData(prev => prev.filter(item => item.id !== id))
-    setFilteredData(prev => prev.filter(item => item.id !== id))
-  }
+  const router = useRouter()
+  const { success, error, SnackbarComponent } = useSnackbar()
 
   const actionsData = row => [
-    {
-      text: 'View',
-      icon: <i className='ri-eye-line text-blue-500' />,
-      menuItemProps: {
-        className: 'gap-2',
-        onClick: () => router.push(`/esse-panel/brochures/${row.original.id}`)
-      }
-    },
     {
       text: 'Edit',
       icon: <i className='ri-edit-box-line text-yellow-500' />,
@@ -92,7 +67,7 @@ const BrochurePage = () => {
       icon: <i className='ri-delete-bin-line text-red-500' />,
       menuItemProps: {
         className: 'gap-2',
-        onClick: () => deleteBrochure(row.original.id)
+        onClick: () => setDeleteIndex(row.original.id)
       }
     }
   ]
@@ -102,10 +77,6 @@ const BrochurePage = () => {
       columnHelper.accessor('title', {
         header: 'Title',
         cell: info => <Typography>{info.getValue()}</Typography>
-      }),
-      columnHelper.accessor('description', {
-        header: 'Description',
-        cell: info => <Typography className='line-clamp-2 max-w-[300px]'>{info.getValue()}</Typography>
       }),
       columnHelper.accessor('file_url', {
         header: 'File',
@@ -143,29 +114,90 @@ const BrochurePage = () => {
     getPaginationRowModel: getPaginationRowModel()
   })
 
+  const fetchBrochure = async () => {
+    const res = await getBrochures(pagination)
+
+    if (res?.data) {
+      setData(res.data)
+      setFilteredData(res.data)
+    }
+  }
+
+  const confirmDelete = async () => {
+    setLoading(true)
+
+    try {
+      const res = await deleteBrochure(deleteIndex)
+
+      if (res?.success) {
+        success('Deleted successfully!')
+        fetchBrochure()
+      }
+    } catch {
+      error('Delete failed!')
+    } finally {
+      setDeleteIndex(null)
+
+      setLoading(false)
+    }
+
+    setDeleteIndex(null)
+  }
+
+  useEffect(() => {
+    fetchBrochure()
+  }, [])
+
+  useEffect(() => {
+    fetchBrochure()
+  }, [pagination])
+
   return (
-    <Card>
-      <CardHeader title='Brochure Management' className='p-4' />
-      <Divider />
-      <TableHeaderActions
-        searchPlaceholder='Search Brochure'
-        searchValue={globalFilter ?? ''}
-        onSearchChange={setGlobalFilter}
-        addLabel='Add Brochure'
-        addHref='/esse-panel/brochures/add'
-        addColor='success'
+    <>
+      <Card>
+        <CardHeader title='Brochure Management' className='p-4' />
+        <Divider />
+        <TableHeaderActions
+          searchPlaceholder='Search Brochure'
+          searchValue={globalFilter ?? ''}
+          onSearchChange={setGlobalFilter}
+          addLabel='Add Brochure'
+          addHref='/esse-panel/brochures/add'
+          addColor='success'
+        />
+        <TableGeneric table={table} />
+        <TablePagination
+          component='div'
+          count={table.getFilteredRowModel().rows.length}
+          rowsPerPage={table.getState().pagination.pageSize || 10}
+          page={table.getState().pagination.pageIndex || 0}
+          onPageChange={(_, page) => {
+            table.setPageIndex(page)
+            setPagination(prev => ({ ...prev, page }))
+          }}
+          onRowsPerPageChange={e => {
+            const newSize = Number(e.target.value)
+
+            table.setPageSize(newSize)
+            setPagination(prev => ({
+              ...prev,
+              page_size: newSize,
+              page: 0
+            }))
+          }}
+          rowsPerPageOptions={[5, 10, 25]}
+        />
+      </Card>
+      <DialogBasic
+        open={deleteIndex !== null}
+        onClose={() => setDeleteIndex(null)}
+        onSubmit={confirmDelete}
+        title='Delete Brochure'
+        description='Are you sure to delete this brochure?'
       />
-      <TableGeneric table={table} />
-      <TablePagination
-        component='div'
-        count={table.getFilteredRowModel().rows.length}
-        rowsPerPage={table.getState().pagination.pageSize || 10}
-        page={table.getState().pagination.pageIndex || 0}
-        onPageChange={(_, page) => table.setPageIndex(page)}
-        onRowsPerPageChange={e => table.setPageSize(Number(e.target.value))}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
-    </Card>
+      {SnackbarComponent}
+      <BackdropLoading open={loading} />
+    </>
   )
 }
 

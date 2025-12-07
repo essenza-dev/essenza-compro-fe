@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
 
@@ -14,36 +14,36 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 
-import { createBrochure, updateBrochure } from '@/services/brochures'
+import { createBrochure, getBrochureById, updateBrochure } from '@/services/brochures'
 
 import useSnackbar from '@/@core/hooks/useSnackbar'
 import CustomTextField from '@/@core/components/custom-inputs/TextField'
 import FormActions from '@/components/FormActions'
 
+import { handleApiResponse } from '@/utils/handleApiResponse'
+import BackdropLoading from '@/components/BackdropLoading'
+
 const defaultData = {
   title: '',
-  description: '',
-  file: null,
-  file_url: ''
+  file: null
 }
 
 const BrochuresForm = ({ id }) => {
   const router = useRouter()
   const isEdit = !!id
   const [data, setData] = useState(defaultData)
-  const [preview, setPreview] = useState(defaultData.file_url || '')
+  const [loading, setLoading] = useState(false)
+  const [preview, setPreview] = useState(defaultData.file || '')
 
   const { success, error, SnackbarComponent } = useSnackbar()
 
   const fields = useMemo(
-    () => [
-      { name: 'title', label: 'Title', placeholder: 'Brochure Title', size: 6, required: true },
-      { name: 'description', label: 'Description', placeholder: 'Brochure Description', size: 6 }
-    ],
+    () => [{ name: 'title', label: 'Title', placeholder: 'Brochure Title', size: 6, required: true }],
     []
   )
 
   const handleSubmit = async e => {
+    setLoading(true)
     e.preventDefault()
 
     await handleApiResponse(() => (isEdit ? updateBrochure(id, data) : createBrochure(data)), {
@@ -51,9 +51,11 @@ const BrochuresForm = ({ id }) => {
       error: msg => error(msg),
       onSuccess: () =>
         setTimeout(() => {
-          router.push('/esse-panel/banners')
-        }, 2000),
-      onError: () => {}
+          router.push('/esse-panel/brochures')
+        }, 1000),
+      onError: () => {
+        setLoading(false)
+      }
     })
   }
 
@@ -76,6 +78,27 @@ const BrochuresForm = ({ id }) => {
     setData(prev => ({ ...prev, file: null, file_url: '' }))
     setPreview('')
   }
+
+  const fetchBrochure = async id => {
+    try {
+      const res = await getBrochureById(id)
+
+      setData(res.data)
+      console.log('res', res.data)
+      if (res.data?.file_url) {
+        const fileName = res.data.file_url.split('/').pop() || res.data.file_url
+        console.log(fileName)
+        setPreview(fileName)
+      }
+    } catch {
+      error('Failed to load Brochure')
+    }
+  }
+
+  useEffect(() => {
+    setPreview('')
+    if (id) fetchBrochure(id)
+  }, [id])
 
   return (
     <>
@@ -105,7 +128,18 @@ const BrochuresForm = ({ id }) => {
 
                 {preview ? (
                   <Box className='flex items-center justify-between border rounded p-3'>
-                    <Typography variant='body2'>{preview}</Typography>
+                    {isEdit ? (
+                      <a
+                        href={data.file_url}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        style={{ color: 'blue', textDecoration: 'underline' }}
+                      >
+                        <Typography variant='body2'>{preview}</Typography>
+                      </a>
+                    ) : (
+                      <Typography variant='body2'>{preview}</Typography>
+                    )}
                     <IconButton color='error' size='small' onClick={handleRemoveFile} className='bg-white shadow'>
                       <i className='ri-delete-bin-line text-red-500 text-lg' />
                     </IconButton>
@@ -124,6 +158,7 @@ const BrochuresForm = ({ id }) => {
         </form>
       </Card>
       {SnackbarComponent}
+      <BackdropLoading open={loading} />
     </>
   )
 }
