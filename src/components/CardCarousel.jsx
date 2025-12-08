@@ -153,6 +153,7 @@ const CardCarousel = props => {
           pagination={{ clickable: true }}
           autoplay={{ delay: duration }}
           loop
+          speed={750}
           slidesPerView={3}
           spaceBetween={10}
           breakpoints={{

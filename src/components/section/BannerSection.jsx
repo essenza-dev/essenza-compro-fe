@@ -91,6 +91,7 @@ const BannerSection = () => {
         navigation
         pagination={{ clickable: true }}
         autoplay={{ delay: 5000 }}
+        speed={750}
         loop
       >
         {banners.map((img, i) => (

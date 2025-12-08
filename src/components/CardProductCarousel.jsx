@@ -139,6 +139,7 @@ const CardProductCarousel = ({ data = [], title, bgColor, duration = 1000 }) => 
           pagination={{ clickable: true }}
           autoplay={{ delay: duration }}
           loop
+          speed={750}
           slidesPerView={1}
           spaceBetween={isMobile ? 5 : 10}
           breakpoints={{
