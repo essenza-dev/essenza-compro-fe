@@ -148,22 +148,6 @@ const ProjectsPage = () => {
           </Typography>
         )
       }),
-      columnHelper.accessor('description', {
-        header: 'Description',
-        cell: info => {
-          const fullText = info.getValue()
-
-          return (
-            <Tooltip title={fullText} arrow>
-              <Box sx={{ maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                <Typography variant='body2' sx={{ fontSize: '0.875rem' }}>
-                  {getTruncateText(fullText, 30)}
-                </Typography>
-              </Box>
-            </Tooltip>
-          )
-        }
-      }),
       columnHelper.accessor('location', {
         header: 'Location',
         cell: info => <Typography variant='body2'>{info.getValue()}</Typography>

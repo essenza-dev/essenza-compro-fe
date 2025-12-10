@@ -1,8 +1,15 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
+import Image from 'next/image'
+import Link from 'next/link'
+
 import { Box } from '@mui/material'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+
+import { getPubBanners } from '@/services/banner'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -69,19 +76,26 @@ const styles = {
       fontSize: '16px'
     }
   },
-  bannerImage: {
+  imageWrapper: {
     width: '100%',
     height: { xs: '65vh', md: '100vh' },
-    objectFit: 'cover'
+    position: 'relative',
+    overflow: 'hidden'
   }
 }
 
 const BannerSection = () => {
-  const banners = [
-    '/images/illustrations/photos/banner-1.png',
-    '/images/illustrations/photos/banner-2.png',
-    '/images/illustrations/photos/banner-3.png'
-  ]
+  const [banners, setBanners] = useState([])
+
+  const fetchBanners = async () => {
+    const res = await getPubBanners()
+
+    if (res?.data.length > 0) setBanners(res?.data)
+  }
+
+  useEffect(() => {
+    fetchBanners()
+  }, [])
 
   return (
     <Box sx={styles.bannerBox}>
@@ -96,7 +110,20 @@ const BannerSection = () => {
       >
         {banners.map((img, i) => (
           <SwiperSlide key={i}>
-            <Box component='img' src={img} alt={`Banner ${i + 1}`} sx={styles.bannerImage} />
+            <Link href={img?.link_url}>
+              <Box sx={styles.imageWrapper}>
+                <Image
+                  src={img?.image}
+                  alt={img?.title}
+                  fill
+                  sizes='(max-width: 768px) 100vw, 
+               100vw'
+                  style={{
+                    objectFit: 'cover'
+                  }}
+                />
+              </Box>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>

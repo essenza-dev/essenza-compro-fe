@@ -24,4 +24,12 @@ const deleteProject = async id => {
   return await apiClient.delete(`/int/v1/projects/${id}`)
 }
 
-export { getProjects, getProjectById, createProject, updateProject, deleteProject }
+const getPubProjects = async (params = {}) => {
+  return await apiClient.get(`/pub/v1/projects`, { params })
+}
+
+const getPubProjectBySlug = async slug => {
+  return await apiClient.get(`/pub/v1/projects/${slug}`)
+}
+
+export { getProjects, getProjectById, createProject, updateProject, deleteProject, getPubProjects, getPubProjectBySlug }

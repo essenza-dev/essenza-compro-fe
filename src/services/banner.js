@@ -24,4 +24,8 @@ const deleteBanner = async id => {
   return await apiClient.delete(`/int/v1/banners/${id}`)
 }
 
-export { getBanners, getBannerById, createBanner, updateBanner, deleteBanner }
+const getPubBanners = async (params = {}) => {
+  return await apiClient.get('/pub/v1/banners', { params })
+}
+
+export { getBanners, getBannerById, createBanner, updateBanner, deleteBanner, getPubBanners }
