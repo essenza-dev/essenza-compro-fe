@@ -96,6 +96,12 @@ const styles = {
     objectFit: 'cover',
     borderRadius: '10px'
   },
+  bannerImageSquare: {
+    width: '100%',
+    height: { xs: '150px', md: '260px' },
+    objectFit: 'cover',
+    borderRadius: '10px'
+  },
   cardWrapper: {
     borderRadius: '6px',
     height: { xs: '170px', md: '360px' },
@@ -142,7 +148,7 @@ const styles = {
 }
 
 const CardCarousel = props => {
-  const { data = [], title, bgColor, duration = 1000, isCategory = false } = props
+  const { data = [], title, bgColor, duration = 1000, isCategory = false, slidesPerView = 3 } = props
 
   return (
     <Box sx={styles.containerBox(bgColor)}>
@@ -156,14 +162,14 @@ const CardCarousel = props => {
           autoplay={{ delay: duration }}
           loop
           speed={750}
-          slidesPerView={3}
+          slidesPerView={slidesPerView}
           spaceBetween={10}
           breakpoints={{
             0: {
               slidesPerView: 2
             },
             768: {
-              slidesPerView: 3
+              slidesPerView: slidesPerView
             }
           }}
         >
@@ -193,7 +199,12 @@ const CardCarousel = props => {
               {data.map((img, i) => (
                 <SwiperSlide key={i}>
                   <Link href={img?.href || '#'}>
-                    <Box component='img' src={img.src} alt={img.title} sx={styles.bannerImage} />
+                    <Box
+                      component='img'
+                      src={img.src}
+                      alt={img.title}
+                      sx={slidesPerView === 3 ? styles.bannerImage : styles.bannerImageSquare}
+                    />
                     <Typography sx={styles.descriptionBanner}>{img.title}</Typography>
                   </Link>
                 </SwiperSlide>

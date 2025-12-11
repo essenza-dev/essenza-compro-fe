@@ -33,7 +33,7 @@ const NewsSection = () => {
     fetchArticles()
   }, [])
 
-  return <CardCarousel data={articles} title='News & Event' duration={1500} />
+  return <CardCarousel data={articles} title='News & Event' duration={1500} slidesPerView={4} />
 }
 
 export default NewsSection
